@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian, english]{babel}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{braket}
+\usepackage{wrapfig}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\begin{document}
+
+\title{Advanced Gravitational Physics}
+\author{Tommaso Peritore 67043A}
+\date{\today}
+
+\maketitle
+
+\tableofcontents
+
+
+\section{Gravitational Waves}
+
+\subsection{Equations of motion}
+
+\subsection{Solution and resonant frequency}
+
+\subsection{System energy and radiated energy}
+
+\subsection{\texorpdfstring{$h_\times$}{hcross} wave}
+
+\subsection{Example and detection prospects}
+
+
+
+
+\section{Cosmology}
+
+\subsection{Equations from Section 13.3 - Dodelson\&Schmidt}
+
+\subsubsection*{Eq.13.19 - Lensing deflection angle}
+
+The lensing deflection angle $\Delta \boldsymbol{\theta}$ is related to the lensing potential $\phi_L$ by:
+\begin{equation}
+    \Delta \boldsymbol{\theta}(\mathbf{l}) = i \, \mathbf{\ell} \, \phi_L(\mathbf{l}),
+\end{equation}
+which is Dodelson's Eq.13.19, which we can verify starting from the real-space relation:
+\begin{equation}
+    \Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \phi_L(\boldsymbol{\theta}),
+\end{equation}
+having defined the lensing potential as:
+\begin{equation}
+    \phi_L(\boldsymbol{\theta}) \equiv 2 \int_{0}^{\chi} \frac{d\chi'}{\chi'} \Phi(\mathbf{x}(\boldsymbol{\theta}, \chi')) (1 - \chi'/\chi).
+\end{equation}
+
+
+see Fourier $f(\mathbf{l}) \to e^{-i \mathbf{l} \cdot \boldsymbol{\theta}} f(\boldsymbol{\theta}) \quad ; \quad f(\boldsymbol{\theta}) \to \frac{e^{i \mathbf{l} \cdot \boldsymbol{\theta}}}{(2\pi)^2} f(\mathbf{l})$
+
+$\phi_L(\boldsymbol{\theta}) = \int \frac{d^2l}{(2\pi)^2} \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}} \quad ; \quad \Delta \theta^i(\boldsymbol{\theta}) = \int \frac{d^2l}{(2\pi)^2} \Delta \theta^i(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}}$
+    
+from $\Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \phi_L(\boldsymbol{\theta}) \quad$ sub $\phi_L(\boldsymbol{\theta})$ w/ F
+
+\begin{equation*}
+= \frac{\partial}{\partial \theta^i} \int \frac{d^2l}{(2\pi)^2} \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}} = \int \frac{d^2l}{(2\pi)^2} \, i l^i \, \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}}
+\end{equation*}
+
+\noindent comparing \quad $\Delta \boldsymbol{\theta}(\mathbf{l}) = i \mathbf{l} \, \phi_L(\mathbf{l})$
+
+
+\subsection{Exercise 13.7 - Dodelson\&Schmidt}
+
+\subsection{CMB Polarization}
+
+
+\end{document}

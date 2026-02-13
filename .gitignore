@@ -111,6 +111,16 @@ pyrightconfig.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
+# Latex Workshop for Visual Studio Code
+*.fls
+*.fdb_latexmk
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.aux
+*.bbl
+
 # Local History for Visual Studio Code
 .history/
 
@@ -125,6 +135,5 @@ pyrightconfig.json
 #MacOs specific
 *.DS_Store
 
-# Directories to ignore
-/Latex/
+# specific files to ignore
 /gem.ipynb
