@@ -1,9 +1,16 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[italian, english]{babel}
 
-\usepackage[margin=2cm]{geometry}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    top=3.3cm,
+    bottom=3cm,
+    left=3cm,
+    right=3cm
+}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -20,6 +27,7 @@
     linkcolor=black,
     urlcolor=black
 }
+\newcommand{\lambdabar}{\lambda\mkern-9mu\raisebox{0.5ex}{--}}
 
 \begin{document}
 
@@ -34,15 +42,266 @@
 
 \section{Gravitational Waves}
 
+Let's start by reading Section 8.1.1 of Maggiore's book. Take now two masses $m_1$ and $m_2$, connected by
+a spring of constant $k$ along the $x$-axis. The oscillations are damped by a friction with $F= - adx/dt$. At
+equilibrium the two masses are at a distance $L$. The system is hit by a gravitational wave propagating in
+the $z$ direction, with $h_+ = h \cos(\omega t)$ along $x$ and $h_\times = 0$.
+\begin{itemize}
+	\item Find the equation of motion for $x(t)$. It should resemble a damped harmonic oscillator, with an
+undamped angular frequency $\omega_0$ dependent on $k$, $m_1$ and $m_2$, and a source term given by GWs.
+	\item Solve this equation in the form $x(t) = C \cos(\omega t+ \phi)$, and find the resonant frequency.
+	\item Averaging over one oscillation compute the total energy of the system and the radiated energy.
+	\item What qualitatively happens in $h_\times \neq 0$ but $h_+ = 0$ ?
+	\item Take $L = 10$ m, $h = 10^{ - 21}$, $\omega_0 = 2\pi$ kHz, $m_1 = m_2 = 10^3$ kg, and a quality factor $Q \sim 10^6$, see Maggiore. Do you think we can detect gravitational waves with such a system?
+\end{itemize}
+
+\subsection{Preliminaries}
+First off, the problem we have at hand describes the interaction of an elastic system with an incoming gravitational wave, as is presented in Maggiore's Sec 8.1 and 8.2. In general the effect of an incoming GW should be analyzed by looking at the Einstein equation dependent on the GW's energy momentum tensor, and thus the motion generated on the system. However, this becomes a relatively easy problem when we can approximate the effect of the GW on the masses by a Newtonian force (expressed with the geodesic deviation equation) rather than the full GR equations. This is only possible when the masses are apart from each other a length ($L$ in our case) much smaller than the typical scale of variation in the GW, i.e. the reduced wavelength $\lambdabar$ of the wave, allowing us to treat the gravitational wave as a uniform field across the system. This approximation is necessary, but not fully justified as of yet; we will give more details on that throguhout the exercise solution.
+
+As is typical in these cases, we put ourselves in the proper detector frame (refering to Sec. 1.3.3 of Maggiore). Here, the said approximation $L \ll \lambda$ makes it so that the geodesic deviation, when expanding the Cristoffel symbols in $\mathcal{O}(\xi)$, with $\xi$ being the deviation coordinate, usefully reduces to a Newtonian-like force (eq 1.95 of Maggiore):
+\begin{equation}
+    F_i = \frac{m}{2} \ddot{h}_{ij}^{TT} x^j
+\end{equation}
+
+We can now define the center of mass (baricentral) and relative coordinates:
+
+\begin{equation}
+    M = m_1 + m_2, \quad R = \frac{m_1 x_1 + m_2 x_2}{M}
+\end{equation}
+
+\begin{equation}
+    \mu = \frac{m_1 m_2}{M}, \quad x = x_2 - x_1
+\end{equation}
+with $M$ the total mass and $\mu$ the reduced mass of the system.
+
+
 \subsection{Equations of motion}
+
+We use the form of the GW as given $h_+ = h \cos(\omega t)$ along the $x$-axis, which reduces the problem to one dimensional, as the sole force from GW is in the $x$-direction, as is our spring. Dropping the notation $TT$ for simplicity, we can write the coupled equations of motion for the two masses:
+\begin{equation}
+\begin{matrix}
+    (i)  \\ 
+    (ii) \vphantom{\frac{\frac{\frac{1}{2}}{2}}{2}}
+\end{matrix}
+\quad
+\left\{
+\begin{aligned}
+    m_1 \ddot{x}_1 &= -k(x_1 - x_2 - L) - a(\dot{x}_1 - \dot{x}_2) + \frac{m_1}{2} \ddot{h}_{+} x_1 \\
+    m_2 \ddot{x}_2 &= k(x_1 - x_2 - L) + a(\dot{x}_1 - \dot{x}_2) + \frac{m_2}{2} \ddot{h}_{+} x_2
+\end{aligned}
+\right.
+\end{equation}
+
+To decouple them, we first look at the center of mass motion with $(i) + (ii)$ which eliminates most terms from LHS:
+\begin{equation}
+    m_1 \ddot{x}_1 + m_2 \ddot{x}_2 = M \ddot{R} = \frac{\ddot{h}_{+}}{2} M R
+\end{equation}
+
+Now for the relative motion, we compute $(ii) - (i)$ looking to isolate $\ddot{x}_2 - \ddot{x}_1$, the relative acceleration of the system. This gives:
+\begin{equation}
+    m_2 \ddot{x}_2 - m_1 \ddot{x}_1 = -2k(x - L) - 2a \dot{x} + \frac{\ddot{h}_{+}}{2} (m_2 x_2 - m_1 x_1)
+\end{equation}
+
+Analyzing the gravitational driving term on the RHS, we can show that\footnote{The semplification is achieved by multiplying by $M/M$ and then adding and subtracting $m_1m_2(x_2+x_1)$ and combining similar terms to construct $\mu$ and $R$.} 
+\begin{equation}
+	m_2 x_2 - m_1 x_1 = ... = 2\mu x + (m_2 -m_1) R
+\end{equation}
+
+% \begin{equation}
+%     (m_2 x_2 - m_1 x_1) \cdot \frac{M}{M} = \frac{1}{M} [m_1 m_2 x_2 + m_2^2 x_2 - m_1 m_2 x_1 - m_1^2 x_1 \pm m_1 m_2 (x_2 + x_1)]
+% \end{equation}
+% \begin{equation}
+%     = \frac{1}{M} [2 m_1 m_2 (x_2 - x_1) + m_2 (m_2 x_2 + m_1 x_1) - m_1 (m_2 x_2 + m_1 x_1)]
+% \end{equation}
+% \begin{equation}
+%     = -2 \frac{m_1 m_2}{M} (x_1 - x_2) + (m_2 - m_1) R = -2\mu x + (m_2 - m_1) R
+% \end{equation}
+
+Substituting this back into the relative equation of motion
+\begin{equation}
+    2\mu \ddot{x} + (m_2 - m_1) \ddot{R} = -2k(x - L) - 2a \dot{x} + \frac{\ddot{h}_+}{2} \left[2\mu x + (m_2 - m_1) R\right]
+\end{equation}
+
+Now putting this all together gives we see that from the relative motion, the baricentral terms cancel each other, leaving with
+
+\begin{equation}
+\begin{cases}
+		\ddot{R} = \frac{\ddot{h}_+}{2} R \\
+		\ddot{x} = -\frac{k}{\mu} (x-L) -\frac{a}{\mu}\dot{x} + \frac{\ddot{h}_+}{2} x
+\end{cases}
+\end{equation}
+
+As the equations are now decoupled we can concentrate on the relative motion, which is what will be measured in our interferometer. 
 
 \subsection{Solution and resonant frequency}
 
+We can now solve using the ansatz given in the text:
+\begin{equation}
+    x(t) = C \cos(\omega t + \phi)
+\end{equation}
+
+Using the form of the incoming GW to calculate its second derivative, we also introduce a change of variable $r=x-L$, and we define the natural frequency $\omega_0^2 = \frac{k}{\mu}$ and the damping constant $2\gamma = \frac{a}{\mu}$, such that the equation of motion becomes
+\begin{equation}
+    \ddot{r} + \omega_0^2 r + 2\gamma \dot{r} + \frac{h}{2} \omega^2 \cos(\omega t) (r + L) = 0
+\end{equation}
+Here we notice that, assuming the perturbations due to GW being $\mathcal{O}(h)$, we can expand to first order in $h$, such that $r+L \approx L$, which gives
+\begin{equation}
+    \ddot{r} + 2\gamma \dot{r} + \omega_0^2 r + \frac{h}{2} L \omega^2 \cos(\omega t) = 0
+\end{equation}
+which we can solve as a forced-damped armonic oscillator.
+
+\subsubsection{Homogeneous Solution (Transient)}
+
+The homogeneous equation of the problem is $\ddot{r} + 2\gamma \dot{r} + \omega_0^2 r = 0$
+We solve it with the ansatz $r(t) = e^{\lambda t}$. This gives $\lambda^2 + 2\gamma \lambda + \omega_0^2 = 0$.
+\begin{equation}
+    \lambda_{1,2} = -\gamma \pm \sqrt{\gamma^2 - \omega_0^2}
+\end{equation}
+Depending on the sign of the square root, we have three different solutions. Our interest is on the underdamped motion, where $\omega_0^2 > \gamma^2 \iff \frac{k}{\mu} > \frac{a^2}{4\mu^2}$, then
+\begin{equation}
+    r_0(t) = C' e^{-\gamma t} \cos(\omega' t + \phi')
+\end{equation}
+where $\omega' = \sqrt{\omega_0^2 - \gamma^2}$.
+Note that $r_0(t) \to 0$ as $t \to \infty$, i.e. it is the transient, so it will not be relevant for the steady state. We have to assume then that the incoming wave perturbes the system for a long enough time to allow the transient to stabilize. 
+
+\subsubsection{Particular Solution (Steady State)}
+We had, as the full o.d.e. $\ddot{r} + 2\gamma \dot{r} + \omega_0^2 r = -\frac{h}{2} L \omega^2 \cos(\omega t)$, where we can use as ansatz the one provided in the text: $r_p(t) = C \cos(\omega t + \phi)$, thus getting:
+\begin{equation}
+    -C\omega^2 \cos(\omega t + \phi) - 2\gamma C \omega \sin(\omega t + \phi) + C \omega_0^2 \cos(\omega t + \phi) + \frac{h}{2} L \omega^2 \cos(\omega t) = 0
+\end{equation}
+
+To solve this we go use a trick: going into complex field we define $z(t)$ such that $r(t) = \text{Re}[z(t)]$ and the driving force is $\text{Re}\left[-\frac{h}{2} L \omega^2 e^{i\omega t}\right]$. 
+Here, our equation of motion can be defined as 
+\begin{equation}
+	\text{Re}\left[ \ddot{z} + 2\gamma \dot{z} + \omega_0^2 z = \frac{-h}{2} L \omega^2 e^{i\omega t}\right]
+\end{equation}
+and looking for the particular solution, $r_p(t) = \text{Re}[z_p(t)]$,
+\begin{equation}
+    z_p(t) = C e^{i(\omega t + \phi)}, \quad \dot{z}_p = i\omega z_p, \quad \ddot{z}_p = -\omega^2 z_p
+\end{equation}
+which substituting in the complex equation of motion gives
+\begin{equation}
+    z_p(t) [-\omega^2 + 2i\gamma \omega + \omega_0^2] = -\frac{h}{2} L \omega^2 e^{i\omega t}
+\end{equation}
+Now dividing by $e^{i\omega t}$, and bringing to LHS the $\phi$ term, we get
+\begin{equation}
+    \omega_0^2 + 2i\gamma \omega - \omega^2  = -\frac{h L \omega^2}{2C} e^{-i \phi}
+\end{equation}
+Separating real and imaginary parts gives
+\begin{equation}
+    \begin{cases}
+        \text{Re}:  \omega_0^2 - \omega^2  = -\frac{h L \omega^2}{2C} \cos{\phi} \\
+        \text{Im}: 2\gamma\omega = \frac{h L \omega^2}{2C} \sin{\phi}
+    \end{cases}
+\end{equation}
+
+Isolating the sine and cosine of $\phi$ we can find coefficients of the solution: dividing Im by Re we get
+\begin{equation}
+    \tan \phi = -\frac{2\gamma \omega}{\omega_0^2 - \omega^2} \implies \phi = \arctan \left( \frac{2\gamma \omega}{\omega^2 - \omega_0^2} \right)
+\end{equation}
+while taking the modulus squared of the complex equation, i.e. Re$^2 + $ Im$^2$ gives:
+\begin{equation}
+    1 = 4\frac{C^2}{L^2h^2}\left(1-\frac{\omega_0^2}{\omega^2}\right) + 16 \frac{C^2}{L^2h^2}\frac{\gamma^2}{\omega^2}
+\end{equation}
+and isolating $C$ gives
+\begin{equation}
+    C = \frac{L h \omega^2}{2 \sqrt{(\omega^2 - \omega_0^2)^2 + 4\gamma^2 \omega^2}}
+\end{equation}
+
+We now highlight some aspects of what we found. First off, the homogeneous solution describes the damped oscillator without any driving force, which actually is identically null if the spring is in equilibrium at $t=0$. Secondly, in general the solution to our o.d.e. is $r(t) = r_0(t) + r_p(t)$ but since we have seen that the homogeneous part is a transient and $r(t)\to 0$ after a long enough time, if we assume that the GW persists for a time $\tau \gg 1/\gamma$, the time scale of the exponential suppression of the transient, then we can take the solution in equilibrium to be only the particular solution.
+
 \subsection{System energy and radiated energy}
 
-\subsection{\texorpdfstring{$h_\times$}{hcross} wave}
+In the equilibrium solution, we can ignore the fact that the oscillating masses produce themselves GWs, which in turn emit energy which should be treated as a radiative term. We will later justify why this is negligible. Thus the total energy of our system, considering kinetic and elastic energy, is given by:
+\begin{equation}
+    E(t) = \frac{\mu}{2} \dot{x}^2 + \frac{1}{2} k (x - L)^2
+\end{equation}
+The equilibrium regime is effectively when the masses have reached an oscillating frequency which makes them disperse to friction (due to non-ideality of the spring) exactly the amount of energy absorbed from the incoming GW. 
 
-\subsection{Example and detection prospects}
+Having solved the equations of motion in terms of $r(t)$ we now go back to $x(t) = r(t)+ L = C \cos(\omega t + \phi) + L$. Then, the energy is:
+\begin{equation}
+    E(t) = \frac{\mu}{2} C^2 \omega^2 \sin^2(\omega t + \phi) + \frac{1}{2} k C^2 \cos^2(\omega t + \phi)
+\end{equation}
+
+Averaging the terms of the energy over one period $T=2\pi/\omega$, we know that $\langle \cos^2 \rangle = \langle \sin^2 \rangle = 1/2$ when the average is carried out over a period of the oscillation, such that the energy over one period is:
+\begin{equation}
+    \langle E\rangle_T = \frac{\mu C^2 \omega^2}{4} + \frac{k C^2}{4} = \frac{\mu C^2}{4} \left(\omega^2 + \omega_0^2\right)
+\end{equation}
+
+To calculate the total energy of the system we ignored the production of GW by the oscillating masses. Now we want to find if we had reason to ignore such term. The problem of quadrupole radiation emitted by a non-relativistic harmonic oscillation is tackled in Maggiore's solved problem 3.1 of Chapter 3. The assumption of non-relativistic speeds practically coincides with the already made assumption of $L\ll\lambdabar$, which we once again postpone to justify. Maggiore's equation 3.314 for the power radiated per solid angle, computed from the second mass moment, is:
+\begin{equation}
+    \frac{dP}{d\Omega} = \frac{r^2 c^3}{16\pi G} \langle \dot{h}_{+}^2 \rangle
+\end{equation}
+Let's take a moment to clarify our convention. We had the masses oscillating along the $x$-axis, with the external GW incoming from the $z$-axis. Then the $h_+$ polarization averaged above is the oscillation in the $z-y$ plane parallel to the axes (the $h_\times$ polarization would be here simply a rotation of $45^\circ$ and as such it is not different from the $+$ polarization, but rather just a convention). We then take spherical coordinates to describe the radiating direction as are usually taken but now from the $x$-axis, i.e. $\theta$ is the angle from the $x$-axis, and $\phi$ the angle from $-z$ direction towards the $y$-axis (we have however azymuthal symmetry here). 
+
+For our oscillating masses we have (still in relative coordinates) the mass density as:
+\begin{equation}
+	\rho(t,\boldsymbol{x}) = \mu \delta(x-x(t))\delta(y)\delta(z)
+\end{equation}
+Then the second mass moment is
+\begin{align} \begin{split}
+M^{ij}(t) &= \int d^3x \, \rho(t, \mathbf{x}) x^i x^j \\
+&= \mu x^2(t) \delta^{i1} \delta^{j1}
+\end{split}\end{align}
+
+Substituting this into eq. 3.72 we have to remember that our $x$ coordinate is there the $z$ coordinate, so our only non-zero second mass moment $M^{11}$ is called there $M_{33} $. We then obtain
+\begin{align}
+h_+(t; \theta, \phi) &= -\frac{1}{r} \frac{G}{c^4} \ddot{M}_{11}(t_{\text{ret}}) \sin^2 \theta \\
+&= \frac{2G\mu \omega^2}{r c^4} \sin^2 \theta \left[ C^2 \cos(2\omega t_{\text{ret}}) + LC\cos(\omega t_{\text{ret}})\right]
+\end{align}
+Then we have
+\begin{equation}
+	\dot{h}^2_+(t;\theta,\phi) \propto \omega^2\sin^4(\theta)\left[4C^2 \sin^2(2\omega t) + L^2 \sin^2 (\omega t) + 2CL\sin(2\omega t)\sin(\omega t)\right]
+\end{equation}
+
+Averaging over. one period we have different terms, with different periods, thus we have to chose the bigger of the two: $T= 2\pi/\omega$. The first term we get is:
+\begin{align}
+	\langle \sin^2(2\omega t)\rangle_T &= \frac{1}{T}\int_0^T dt \sin^2(2\omega t) = \frac{1}{T}\left(\int_0^{\pi / \omega }+ \int_{\pi / \omega}^{2\pi/\omega}\right) dt \sin^2(2\omega t) = \frac{\omega}{2\pi} \left( 2\cdot\frac{\pi}{2\omega}\right) = \frac12
+\end{align}
+The second is more straightforward as we're integrating a $\sin^2$ over its period:
+\begin{align}
+	\langle \sin^2(\omega t)\rangle_T &= \frac{1}{T}\int_0^T dt \sin^2(\omega t) =  \frac12
+\end{align}
+Finally the last term is null. We then get the $+$ polarization integrated over one period to be 
+\begin{align}
+    \langle \dot{h}_{+}^2 \rangle = \frac{4G^2\mu^2}{r^2c^8} \omega^6C^2 \sin^4 \theta \left[ 2C^2 + \frac{L^2}{2} \right]
+\end{align}
+which brings us to the power over solid angle
+\begin{equation}
+    \frac{dP}{d\Omega} = \frac{G \mu^2 \omega^6}{4 \pi c^5} C^2 \sin^4 \theta \left[ 2C^2 + \frac{L^2}{2} \right]
+\end{equation}
+
+Now we can integrate over the solid angle, using $\int \sin^4 \theta d\Omega = \frac{32\pi}{15}$, which gives us the power (it is now the total power radiated over one period of the oscillation):
+\begin{equation}
+    P = \frac{8}{15} G \mu^2 \frac{\omega^6}{c^5} C^2 \left( 2C^2 + \frac{L^2}{2} \right)
+\end{equation}
+
+Finally, we can find the total radiated Energy $E_R$, integrating over one period the power (practically multiplying by $T$):
+\begin{equation}
+    E_R = \frac{16\pi}{15} G \mu^2 \frac{\omega^5}{c^5} 2C^4 \left( 1 + \frac{L^2}{4C^2} \right) = \frac{32\pi}{15} G \mu^2 \left(\frac vc\right)^5 \frac1C \left( 1 + \frac{L^2}{4C^2} \right)
+\end{equation}
+where in the last step we have defined $v:=C\omega$ as the typical velocity of our system. This will allow us to show that this energy is negligible compared with the total energy of the system when we will, at the last step of the exercise, substitute the values of the constants of our system.
+
+
+\subsection{\texorpdfstring{Polarization $h_\times$}{Polarization hcross}}
+
+
+
+\subsection{Example values and detection prospects}
+
+We find the amplitude of oscillation at resonance, i.e. with $\omega = \omega_0$:
+\begin{equation}
+    C_{\text{res}} = \frac{L h \omega^2}{2 \sqrt{0 + 4 \gamma^2 \omega^2}} = \frac{L h \omega}{4 \gamma}
+\end{equation}
+The quality factor, as defined in Maggiore eq. 8.21, $Q = \frac{\omega_0}{2\gamma}$ allows us to find the damping constant $\gamma = \frac{\omega_0}{2Q}$. Then
+\begin{equation}
+    C_{\text{res}} = \frac{L h \omega_0}{4 (\omega_0 / 2Q)} = \frac{Q L h}{2}
+\end{equation}
+Using the values provided in the text, we find:
+\begin{equation}
+    C_{\text{res}} \approx \frac{1}{2} (10^6) (10 \text{ m}) (10^{-21}) = 0.5 \times 10^{-14} \text{ m}
+\end{equation}
+
 
 
 

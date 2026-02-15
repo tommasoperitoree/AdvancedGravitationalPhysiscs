@@ -119,6 +119,7 @@ pyrightconfig.json
 *.synctex.gz
 *.toc
 *.aux
+*.xdv
 *.bbl
 
 # Local History for Visual Studio Code
