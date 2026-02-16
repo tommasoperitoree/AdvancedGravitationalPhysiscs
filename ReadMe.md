@@ -1,6 +1,6 @@
 # Advanced Gravitational Physics - professor Emanuele Castorina
-## Project by Tommaso Peritore (67043A) for exam of a.y. 2025-2026
-# Advanced Gravitational Physics & Cosmology
+
+Project by Tommaso Peritore (67043A) for exam of a.y. 2025-2026
 
 ## Overview
 This repository contains the solutions to the "Advanced Gravitational Physics" coursework (February 2026). The project is divided into two main sections:
