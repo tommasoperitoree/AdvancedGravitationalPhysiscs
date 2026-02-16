@@ -586,7 +586,7 @@ We start from the expression for $\Theta_{\text{obs}}(\B\ell)$ calculated in the
 	\delta \Theta^{(2)}(\B\ell) &= \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2}{(2\pi)^4} (\B\ell_1 \cdot (\B\ell-\B\ell_1-\B\ell_2))(\B\ell_2 \cdot (\B\ell-\B\ell_1-\B\ell_2)) \phi_L(\B\ell_1) \phi_L(\B\ell_2) \Theta(\B\ell-\B\ell_1-\B\ell_2)
 \end{align}
 
-Now the power spectrum being $\langle \Theta_{\text{obs}}(\B\ell)\Theta^*_{\text{obs}}(\B\ell)\rangle$, we have to expand this term by term. However, we can consider that since the metric potential $\Phi$ which acts as a source to our lensing potential $\phi_L$ is a perturbation of the homogeneous FLRW metric, and as a perturbation from its mean value, the potential has null average. Thus all terms with an odd number of $\phi_L$ vanish. Furthermore we are assuming that the fields are uncorrelated, i.e. $\langle \phi_L \Theta \rangle = 0$.
+Now the power spectrum being $\langle \Theta_{\text{obs}}(\B\ell)\Theta^*_{\text{obs}}(\B\ell)\rangle$, we have to expand this term by term. However, we can consider that these two fields are gaussian fields with null average. Thus all terms with an odd number of $\phi_L$ vanish. Furthermore we are assuming that the fields are uncorrelated, i.e. $\langle \phi_L \Theta \rangle = 0$.
 Using this, the remaining terms are:
 \begin{equation}
 	C^{\text{obs}}(\ell) = \langle \Theta(\B\ell)\Theta^*(\B\ell) \rangle + \langle \delta\Theta^{(1)}(\B\ell) \delta\Theta^{(1)*}(\B\ell) \rangle + \langle \Theta(\B\ell) \delta\Theta^{(2)*}(\B\ell) \rangle + \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle
@@ -603,12 +603,12 @@ Here the spatial average is carried out using Wick's theorem: we have to make al
 \end{equation}
 Now onto the last two terms, calling $\boldsymbol{L}=\B\ell-\B\ell_1-\B\ell_2$:
 \begin{align} \begin{split}
-	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle &=  \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2 }{(2\pi)^4} (\B\ell_1 \cdot \boldsymbol{L})(\B\ell_2 \cdot \boldsymbol{L}) \\
+	\langle \Theta \cdot\delta\Theta^{(2)*} \rangle +  \langle \Theta^* \cdot\delta\Theta^{(2)} \rangle &=  \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2 }{(2\pi)^4} (\B\ell_1 \cdot \boldsymbol{L})(\B\ell_2 \cdot \boldsymbol{L}) \\
 	&\quad \times \big[ \langle \Theta(\B\ell) \phi_L^*(\B\ell_1) \phi_L^*(\B\ell_2) \Theta^*(\boldsymbol{L})\rangle + \langle \Theta^*(\B\ell) \phi_L(\B\ell_1) \phi_L(\B\ell_2) \Theta(\boldsymbol{L}) \rangle \big]
 \end{split} \end{align}
 Now using once again Wick's theorem to save only the non-zero contractions, and the definition of lensing potential power spectrum which gives a factor $\delta^{(2)}_D(\B\ell_1+\B\ell_2)$, we can see that the two spatial averages are the same, giving a factor of two:
 \begin{equation} \label{eq:almost_c_13}
-	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle = - \int \frac{d^2\ell_1}{(2\pi)^2} (\B\ell \cdot \B\ell_1)^2 C_{\phi\phi}(\ell_1) C(\ell)
+	\langle \Theta \cdot\delta\Theta^{(2)*} \rangle +  \langle \Theta^* \delta\Theta^{(2)} \rangle = - \int \frac{d^2\ell_1}{(2\pi)^2} (\B\ell \cdot \B\ell_1)^2 C_{\phi\phi}(\ell_1) C(\ell)
 \end{equation}
 Now to get to the final form given in Dodelson, we have to manipulate the geometric factor. 
 \begin{equation}
@@ -623,7 +623,7 @@ and comparing these two we can state that
 \end{equation}
 such that, from Eq.\eqref{eq:almost_c_13}, we have
 \begin{equation}
-	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle = -\frac{\ell^2}{2} \left[ \int \frac{d^2\ell_1}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] C(\ell) \equiv 2C^{(13)}(\ell)
+	\langle \Theta \cdot\delta\Theta^{(2)*} \rangle +  \langle \Theta^* \cdot \delta\Theta^{(2)} \rangle = -\frac{\ell^2}{2} \left[ \int \frac{d^2\ell_1}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] C(\ell) \equiv 2C^{(13)}(\ell)
 \end{equation}
 having thus shown term by term all factors of the taylor expansion of the power spectrum up to $\mathcal{O}(\phi_L^2)$. In fact, other combinations, such as $\langle \delta\Theta^{(2)} \delta\Theta^{(2)*} \rangle$ gave terms of $\mathcal{O}(\phi_L^4)$.
 
@@ -640,7 +640,7 @@ This equation is a definition and does not need to be verified.
     \begin{aligned}
         \langle \Theta&_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} \overset{\B\ell' \neq \B\ell}{=} \\
         &= - \int \frac{d^2 \ell_1}{(2\pi)^2} \Big[ \phi_L^*(\B\ell_1) \B\ell_1 \cdot (\B\ell' - \B\ell_1) \langle \Theta(\B\ell) \Theta^*(\B\ell' - \B\ell_1) \rangle + \phi_L(\B\ell_1) \B\ell_1 \cdot (\B\ell - \B\ell_1) \langle \Theta(\B\ell - \B\ell_1) \Theta^*(\B\ell') \rangle \Big] \\
-        &=  \phi_L(\B\ell - \B\ell') (\B\ell - \B\ell') \cdot [ \B\ell C(\ell) - \B\ell' C(\ell') ] \ .
+        &=  \phi_L(\B\ell - \B\ell') (\B\ell - \B\ell') \cdot [ \B\ell C(\ell) - \B\ell' C(\ell') ]
     \end{aligned}
 \end{equation}
 This equation gives the correlator between two lensed modes of the CMB temperature anisotropy distributions $\Theta_{\text{obs}}(\B \ell)$, having different values of $\B\ell$.
@@ -649,9 +649,9 @@ The correlator is computed by averaging over the primary CMB fluctuations while 
 We therefore calculate the correlator, starting again from the expansion Eq.\eqref{eq:anys_to_validate} and considering only first-order terms in $\phi_L$:
 \begin{equation}
 \begin{aligned}
-    \langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \ \langle \Theta(\B\ell) \Theta^*(\B\ell') \rangle + \\
-        & - \left\langle \Theta(\B\ell) \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell') (\B\ell_1 \cdot \B\ell_2) \phi_L^*(\B\ell_1) \Theta^*(\B\ell_2) \right\rangle + \\
-        & - \left\langle \Theta^*(\B\ell') \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell) (\B\ell_1 \cdot \B\ell_2) \phi_L(\B\ell_1) \Theta(\B\ell_2) \right\rangle \ .
+    \langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \ \langle \Theta(\B\ell) \Theta^*(\B\ell') \rangle \\
+        & - \left\langle \Theta(\B\ell) \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell') (\B\ell_1 \cdot \B\ell_2) \phi_L^*(\B\ell_1) \Theta^*(\B\ell_2) \right\rangle \\
+        & - \left\langle \Theta^*(\B\ell') \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell) (\B\ell_1 \cdot \B\ell_2) \phi_L(\B\ell_1) \Theta(\B\ell_2) \right\rangle 
 \end{aligned}
 \end{equation}
 The first term vanishes because the unlensed modes with different $\B\ell$ are uncorrelated; furthermore, we have neglected the second-order terms present in the expansion \eqref{eq:anys_to_validate}.
@@ -660,7 +660,7 @@ The mean value operation commutes with the integral over $\B \ell_1$; additional
 We thus obtain:
 \begin{equation}
 	\begin{aligned}
-    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' - \B \ell_1) \phi_L^*(\B\ell_1) \langle \Theta(\B \ell) \Theta^*(\B \ell' - \B \ell_1) \rangle + \\
+    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' - \B \ell_1) \phi_L^*(\B\ell_1) \langle \Theta(\B \ell) \Theta^*(\B \ell' - \B \ell_1) \rangle \\
     	& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell - \B \ell_1) \phi_L(\B\ell_1) \langle \Theta^*(\B \ell - \B \ell_1) \Theta(\B \ell') \rangle \ .
 	\end{aligned}
 \end{equation}
@@ -668,8 +668,8 @@ We thus obtain:
 Recalling definition \eqref{eq:Cl} and using the fact that $\phi_L(\B \ell)$ is real (see Eq.\eqref{eq:phireal}), we can perform the substitution $\B \ell_1 \to -\B\ell_1$ in the first integral, obtaining:
 \begin{equation}
 	\begin{aligned}
-    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' + \B \ell_1) \phi_L(\B\ell_1) C(\ell) \delta_D^{(2)}(\B \ell - \B \ell' - \B \ell_1) + \\
-    	& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell - \B\ell_1) \phi_L(\B\ell_1) C(\ell') \delta_D^{(2)}(\B \ell' - \B \ell + \B \ell_1) \ .
+    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' + \B \ell_1) \phi_L(\B\ell_1) C(\ell) \delta_D^{(2)}(\B \ell - \B \ell' - \B \ell_1) \\
+    	& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell - \B\ell_1) \phi_L(\B\ell_1) C(\ell') \delta_D^{(2)}(\B \ell' - \B \ell + \B \ell_1)
 	\end{aligned}
 \end{equation}
 
@@ -678,7 +678,7 @@ Finally, integrating the two terms, both Dirac deltas impose $\B\ell_1 = \B\ell 
 \begin{equation}
 \begin{aligned}
     \langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L}& = (\B\ell - \B\ell') \cdot \B\ell \phi_L(\B\ell - \B\ell') C(l) - (\B\ell - \B\ell') \cdot \B\ell' \phi_L(\B\ell - \B\ell') C(l') = \\
-        & = (\B\ell - \B\ell') \phi_L(\B\ell - \B\ell') \cdot [\B\ell C(l) - \B\ell' C(l')] \ ,
+        & = (\B\ell - \B\ell') \phi_L(\B\ell - \B\ell') \cdot [\B\ell C(l) - \B\ell' C(l')]
 \end{aligned}
 \end{equation}
 
