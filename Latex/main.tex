@@ -712,7 +712,7 @@ such that $P(k,z) = P(k)\cdot D^2(z)$. The Hubble constant in our universe is
 \begin{equation}
 	H(z) = H_0 \left[\Omega_m(1+z)^3 + \Omega_r(1+z)^4 +\Omega_\Lambda\right]^{1/2}
 \end{equation}
-The obtained $C_{\kappa\kappa}(\ell)$ compared with the one provided in the data file is shown in the following figure
+The obtained $C_{\kappa\kappa}(\ell)$ compared with the one provided in the data file is shown in the following figure, from which we can deduce that the approximation we've done by shifting the power spectrum with the growing factor from today to the CMB becomes relevant at small $\ell$s.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{../images/convergence_spec_comp.png}
@@ -763,7 +763,7 @@ We also show a graph of the fractional difference between the lensed and unlense
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{../images/fractional_TT_lensing.png}
-    \caption{Fractional difference between lensed and unlensed, i.e. $(\widetilde{C}(\ell)-C(\ell)) / C(\ell)$.}
+    \caption{Fractional difference between lensed and unlensed, i.e. $\frac{\widetilde{C}_{TT}(\ell)-C_{TT}(\ell)}{C_{TT}(\ell)}$.}
     \label{fig:frac_TT_lensing_terms}
 \end{figure}
 
@@ -772,7 +772,7 @@ To carry out the same analysis but this time on polarization, i.e. lensing the C
 
 Starting from Dodelson's Ch.10 on the polarized CMB, the traceless polarization tensor can be written as
 \begin{equation}
-	I_{ij} = \begin{pmatrix} Q & U \\
+	I^T_{ij} = \begin{pmatrix} Q & U \\
     						U & - Q \end{pmatrix}
 \end{equation}
 where $Q$ and $U$ are (Stokes) parameters used to describe polarization. In a more useful way, we can find that such polarization can be written in terms of scalar and tensor components, which are what we call $E$ and $B$ modes respectively (see Eq.10.7,10.9 from Dodelson):
@@ -823,7 +823,7 @@ Once again to obtain expressions that are integratable with Python we had to man
 \end{equation}
 For more details on the implementation and the code used, see again \href{https://github.com/tommasoperitoree/AdvancedGravitationalPhysiscs}{GitHub/tommasoperitoree}.
 
-Some of the plots obtained are shown below.
+Some of the plots obtained are shown below, where we can evidently see the generation of $B$ modes from pure $E$ modes coming from the CMB.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{../images/pol_lensing_terms.png}
