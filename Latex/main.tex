@@ -1,5 +1,4 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[italian, english]{babel}
 
@@ -12,6 +11,9 @@
     right=3cm
 }
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -28,6 +30,7 @@
     urlcolor=black
 }
 \newcommand{\lambdabar}{\lambda\mkern-9mu\raisebox{0.5ex}{--}}
+\newcommand{\B}{\boldsymbol}
 
 \begin{document}
 
@@ -74,22 +77,43 @@ We can now define the center of mass (baricentral) and relative coordinates:
 \end{equation}
 with $M$ the total mass and $\mu$ the reduced mass of the system.
 
+A sketch of the system is shown below.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+
+\draw[->] (0,0,0) -- (4.5,0,0) node[above left] {$x$};
+\draw[->] (0,0,0) -- (0,1.5,0) node[below left] {$y$};
+\draw[->] (0,0,0) -- (0,0,3) node[above left] {$z$};
+
+% masse
+\draw[thick] (1,0,0) circle (0.2);
+\node at (0.8,0.4,0) {$m_1$};
+\draw[thick] (3,0,0) circle (0.4);
+\node at (3.4,0.5,0) {$m_2$};
+
+% molla
+\draw[thick,decorate,decoration={coil,aspect=0.6,segment length=4pt,amplitude=4pt}]
+(1.2,0,0) -- (2.6,0,0);
+\node at (1.9,0.4,0) {$k$};
+
+% GW
+\draw[thick, ->] (2,0,3) -- (2,0,1);
+\draw (1.8,0,2) -- (2.2,0,2) node[below right] {$h_+$};
+\draw (2,-0.2,2) -- (2,0.2,2);
+
+\end{tikzpicture}
+\end{center}
+
 
 \subsection{Equations of motion}
 
 We use the form of the GW as given $h_+ = h \cos(\omega t)$ along the $x$-axis, which reduces the problem to one dimensional, as the sole force from GW is in the $x$-direction, as is our spring. Dropping the notation $TT$ for simplicity, we can write the coupled equations of motion for the two masses:
 \begin{equation}
-\begin{matrix}
-    (i)  \\ 
-    (ii) \vphantom{\frac{\frac{\frac{1}{2}}{2}}{2}}
-\end{matrix}
-\quad
-\left\{
-\begin{aligned}
-    m_1 \ddot{x}_1 &= -k(x_1 - x_2 - L) - a(\dot{x}_1 - \dot{x}_2) + \frac{m_1}{2} \ddot{h}_{+} x_1 \\
-    m_2 \ddot{x}_2 &= k(x_1 - x_2 - L) + a(\dot{x}_1 - \dot{x}_2) + \frac{m_2}{2} \ddot{h}_{+} x_2
-\end{aligned}
-\right.
+	\begin{cases}
+    	\,(i)\quad\, m_1 \ddot{x}_1 = -k(x_1 - x_2 - L) - a(\dot{x}_1 - \dot{x}_2) + \frac{m_1}{2} \ddot{h}_{+} x_1  \\
+    	(ii)\quad m_2 \ddot{x}_2 = k(x_1 - x_2 - L) + a(\dot{x}_1 - \dot{x}_2) + \frac{m_2}{2} \ddot{h}_{+} x_2 
+	\end{cases}
 \end{equation}
 
 To decouple them, we first look at the center of mass motion with $(i) + (ii)$ which eliminates most terms from LHS:
@@ -210,6 +234,11 @@ and isolating $C$ gives
 
 We now highlight some aspects of what we found. First off, the homogeneous solution describes the damped oscillator without any driving force, which actually is identically null if the spring is in equilibrium at $t=0$. Secondly, in general the solution to our o.d.e. is $r(t) = r_0(t) + r_p(t)$ but since we have seen that the homogeneous part is a transient and $r(t)\to 0$ after a long enough time, if we assume that the GW persists for a time $\tau \gg 1/\gamma$, the time scale of the exponential suppression of the transient, then we can take the solution in equilibrium to be only the particular solution.
 
+Now with the expression of the amplitude at equilibrium of the harmonic oscillator as a function of the frequency of the incoming GW we can find the resonant frequency of the system, i.e. the frequency $\omega_r$ that gives the maximum amplitude:
+\begin{equation}\label{eq:omega_res}
+	\frac{d}{d\omega}C(\omega) \overset{!}{=} 0 \implies \omega_r = \frac{\omega_0}{\sqrt{1-2 (\gamma/\omega_0)^2}}
+\end{equation}
+
 \subsection{System energy and radiated energy}
 
 In the equilibrium solution, we can ignore the fact that the oscillating masses produce themselves GWs, which in turn emit energy which should be treated as a radiative term. We will later justify why this is negligible. Thus the total energy of our system, considering kinetic and elastic energy, is given by:
@@ -224,7 +253,7 @@ Having solved the equations of motion in terms of $r(t)$ we now go back to $x(t)
 \end{equation}
 
 Averaging the terms of the energy over one period $T=2\pi/\omega$, we know that $\langle \cos^2 \rangle = \langle \sin^2 \rangle = 1/2$ when the average is carried out over a period of the oscillation, such that the energy over one period is:
-\begin{equation}
+\begin{equation} \label{eq:total_energy}
     \langle E\rangle_T = \frac{\mu C^2 \omega^2}{4} + \frac{k C^2}{4} = \frac{\mu C^2}{4} \left(\omega^2 + \omega_0^2\right)
 \end{equation}
 
@@ -244,17 +273,17 @@ M^{ij}(t) &= \int d^3x \, \rho(t, \mathbf{x}) x^i x^j \\
 &= \mu x^2(t) \delta^{i1} \delta^{j1}
 \end{split}\end{align}
 
-Substituting this into eq. 3.72 we have to remember that our $x$ coordinate is there the $z$ coordinate, so our only non-zero second mass moment $M^{11}$ is called there $M_{33} $. We then obtain
-\begin{align}
-h_+(t; \theta, \phi) &= -\frac{1}{r} \frac{G}{c^4} \ddot{M}_{11}(t_{\text{ret}}) \sin^2 \theta \\
-&= \frac{2G\mu \omega^2}{r c^4} \sin^2 \theta \left[ C^2 \cos(2\omega t_{\text{ret}}) + LC\cos(\omega t_{\text{ret}})\right]
-\end{align}
+Substituting this into Eq. 3.72 we have to remember that our $x$ coordinate is there the $z$ coordinate, so our only non-zero second mass moment $M^{11}$ is called there $M_{33} $. We then obtain
+\begin{align} \begin{split}
+	h_+(t; \theta, \phi) &= -\frac{1}{r} \frac{G}{c^4} \ddot{M}_{11}(t_{\text{ret}}) \sin^2 \theta \\
+	&= \frac{2G\mu \omega^2}{r c^4} \sin^2 \theta \left[ C^2 \cos(2\omega t_{\text{ret}}) + LC\cos(\omega t_{\text{ret}})\right]
+\end{split} \end{align}
 Then we have
 \begin{equation}
 	\dot{h}^2_+(t;\theta,\phi) \propto \omega^2\sin^4(\theta)\left[4C^2 \sin^2(2\omega t) + L^2 \sin^2 (\omega t) + 2CL\sin(2\omega t)\sin(\omega t)\right]
 \end{equation}
 
-Averaging over. one period we have different terms, with different periods, thus we have to chose the bigger of the two: $T= 2\pi/\omega$. The first term we get is:
+Here have periodic terms with different periods, thus we have to chose the bigger of the two to carry out the integration: $T= 2\pi/\omega$. The first term we get is:
 \begin{align}
 	\langle \sin^2(2\omega t)\rangle_T &= \frac{1}{T}\int_0^T dt \sin^2(2\omega t) = \frac{1}{T}\left(\int_0^{\pi / \omega }+ \int_{\pi / \omega}^{2\pi/\omega}\right) dt \sin^2(2\omega t) = \frac{\omega}{2\pi} \left( 2\cdot\frac{\pi}{2\omega}\right) = \frac12
 \end{align}
@@ -277,71 +306,536 @@ Now we can integrate over the solid angle, using $\int \sin^4 \theta d\Omega = \
 \end{equation}
 
 Finally, we can find the total radiated Energy $E_R$, integrating over one period the power (practically multiplying by $T$):
-\begin{equation}
-    E_R = \frac{16\pi}{15} G \mu^2 \frac{\omega^5}{c^5} 2C^4 \left( 1 + \frac{L^2}{4C^2} \right) = \frac{32\pi}{15} G \mu^2 \left(\frac vc\right)^5 \frac1C \left( 1 + \frac{L^2}{4C^2} \right)
+\begin{equation} \label{eq:E_R}
+    E_R = \frac{16\pi}{15} G \mu^2 \frac{\omega^5}{c^5} 2C^4 \left( 1 + \frac{L^2}{4C^2} \right)
 \end{equation}
-where in the last step we have defined $v:=C\omega$ as the typical velocity of our system. This will allow us to show that this energy is negligible compared with the total energy of the system when we will, at the last step of the exercise, substitute the values of the constants of our system.
+We will have to show that this energy is negligible compared with the total energy of the system when we will, at the last step of the exercise, substitute the values of the constants of our system.
 
 
 \subsection{\texorpdfstring{Polarization $h_\times$}{Polarization hcross}}
+What happens if the same system of two masses connected by a spring oscillating along the $x$-axis gets perturbed by a $\times$-polarized GW?
+To answer the question, it is necesssary to refrain the approximations we have done so far. First of all, we are well in linearized theory as we would not be able to treat the problem so straightforwardly otherwise. That is, right from the Einstein equations, we are considering the effects of the incoming GW  to linear order in $h$. Furthermore, to treat the force of the GW as a Newtonian force (as the text of the exercise implied), we are assuming that our system is of scale $L\ll\lambdabar$ with $\lambdabar = c / \omega$ being the wavelength of the GW, so that the whole system feels a constant force throughout. 
+
+Now we can see when we consider a GW that is $\times$-polarized, as opposed to the $+$ polarization we had considered above. We sketch the system here with lines of force of the incoming $\times$-polarized GW:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+
+\usetikzlibrary{decorations.markings}
+
+\tikzset{
+    freccia_avanti/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.5 with {\arrow{stealth}}
+        }
+    }
+}
+
+\tikzset{
+    freccia_indietro/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.5 with {\arrow{stealth reversed}}
+        }
+    }
+}
+
+% Assi
+\draw[->] (-2,0) -- (2,0) node[above] {$x$};
+\draw[->] (0,-2) -- (0,2) node[left] {$y$};
+
+% x^2 - y^2 = 1  --> y = ±sqrt(x^2 -1)
+\draw[thick, freccia_avanti, domain=1:2, samples=200]
+plot (\x,{sqrt(\x*\x -1)}) -- (2,1.732);
+\draw[thick, freccia_indietro, domain=1:2, samples=200]
+plot (\x,{-sqrt(\x*\x -1)}) -- (2,-1.732);
+
+\draw[thick, freccia_avanti, domain=-2:-1, samples=200]
+plot (\x,{sqrt(\x*\x -1)}) -- (-1,0);
+\draw[thick, freccia_indietro, domain=-2:-1, samples=200]
+plot (\x,{-sqrt(\x*\x -1)}) -- (-1,0);
+
+% y^2 - x^2 = 1  --> x = ±sqrt(y^2 -1)
+\draw[thick, freccia_avanti, domain=1:2, samples=200]
+plot ({sqrt(\x*\x -1)},\x) -- (1.5,1.802);
+\draw[thick, freccia_indietro, domain=1:2, samples=200]
+plot ({-sqrt(\x*\x -1)},\x) -- (-1.5,1.802);
+
+\draw[thick, freccia_avanti, domain=-2:-1, samples=200]
+plot ({sqrt(\x*\x -1)},\x) -- (0,-1);
+\draw[thick, freccia_indietro, domain=-2:-1, samples=200]
+plot ({-sqrt(\x*\x -1)},\x) -- (0,-1);
 
 
+% masse
+\draw[thick] (-1,0,0) circle (0.05);
+\node at (-1.3,0.2,0) {$m_1$};
+\draw[thick] (1,0,0) circle (0.05);
+\node at (1.3,0.2,0) {$m_2$};
+
+% molla
+\draw[thick,decorate,decoration={coil,aspect=0.6,segment length=4pt,amplitude=3pt}]
+(-0.95,0,0) -- (0.95,0,0);
+\node at (0.3,0.3,0) {$k$};
+
+%forze
+\draw[<-, thick, red] (-1,-0.5) -- (-1,0);
+\draw[->, thick, red] (1,0) -- (1,0.5);
+
+\end{tikzpicture}
+\end{center}
+
+Considering the problem up to linear order of $h$, which translate to small oscillations around the starting positions of the masses, the GW applies forces that are tangential to the lines of force shown, and thus we can see that those forces lay along the $y$-axis. Thus we have the two masses oscillating in opposite directions along the $y$-axis, keeping their distance along the $x$-axis constant up to first order. In this regime we can expect the masses to go into resonance in their motion along the $y$-axis. We can also intuit that since in principle the masses are different, their oscillation amplitudes will be slightly different and thus the system won't be stable: we could imagine a rotation of the axis of the spring as the GW gives more energy to the system. However, to show if this actually happens one would have to go to $\mathcal{O}(h^2)$, where also the Einstein equations have to be modified and we can't consider the effect of the GW as a mere Newtonian force.
 
 \subsection{Example values and detection prospects}
 
-We find the amplitude of oscillation at resonance, i.e. with $\omega = \omega_0$:
+The resonant frequency of the system is given by Eq.\eqref{eq:omega_res} which, using the quality factor, as defined in Maggiore Eq. 8.21, $Q = \omega_0/2\gamma$, gives:
 \begin{equation}
-    C_{\text{res}} = \frac{L h \omega^2}{2 \sqrt{0 + 4 \gamma^2 \omega^2}} = \frac{L h \omega}{4 \gamma}
-\end{equation}
-The quality factor, as defined in Maggiore eq. 8.21, $Q = \frac{\omega_0}{2\gamma}$ allows us to find the damping constant $\gamma = \frac{\omega_0}{2Q}$. Then
-\begin{equation}
-    C_{\text{res}} = \frac{L h \omega_0}{4 (\omega_0 / 2Q)} = \frac{Q L h}{2}
-\end{equation}
-Using the values provided in the text, we find:
-\begin{equation}
-    C_{\text{res}} \approx \frac{1}{2} (10^6) (10 \text{ m}) (10^{-21}) = 0.5 \times 10^{-14} \text{ m}
+    \omega_r = \frac{\omega_0}{\sqrt{1-1/2Q^2}} \simeq \omega_0 = 2\pi 10^3 \text{Hz}
 \end{equation}
 
+Now to understand if we can detect such GW, we have to make some considerations. First off, let's find the amplitude of oscillation at resonance, which after some lengthy substitution gives:
+\begin{equation}
+    C_r := C(\omega_r) = \frac{L h}{4} \frac{\omega_0^2}{\gamma\sqrt{\omega_0^2-\gamma^2}}
+\end{equation}
+which can be evaluated once again with the quality factor as
+\begin{equation} \label{eq:C_r}
+    C_r= \frac{L h Q}{2}\frac{1}{\sqrt{1-1/4Q^2}} \simeq \frac{L h Q}{2} = 0.5 (10\text{m}) (10^{-21}) (10^6) = 0.5 \cdot 10^{-14} \text{m}
+\end{equation}
+where we have substituted the values provided in the text and noted that the square root term is negligible.
 
+Such quality factor $Q$ as the one we're given can be obtained (see Sec. 8.1.1 of Maggiore) at cryogenic temperatures, i.e. $T\simeq 10$K. At such temperatures we can estimate a temperature noise of energy scale $E_T^{\text{noise}} \propto k_B T \simeq 10^{-22}$J. In contrast, the total energy of our system, as we had calculate in Eq\eqref{eq:total_energy}, is:
+\begin{equation}
+	E = \frac{\mu C^2}{4} (\omega^2+\omega_0^2)
+\end{equation}
+which at resonance is:
+\begin{align} \label{eq:en_num}
+	E_r &= \frac{\mu C_r^2}{4} \left(\omega_r^2+\omega_0^2\right) = \frac{\mu L^2h^2}{32} \frac{\omega_0^6}{\gamma^2(\omega_0^2-2\gamma^2)} \\
+	&= \frac{\mu L^2h^2}{8} \frac{Q^2\omega_0^2}{(1-1/2Q^2)} \simeq  \frac{\pi^2}{4} \cdot 10^{-19} \text{J} = 2.5\cdot 10^{-19}\text{J} \nonumber
+\end{align}
+Actually a more sound comparison to the temperature noise would be just the kinetic energy, which however from an harmonic oscillator we expect to be of the same order as the total, as potential and kinetic energy oscillate in counterphase. Nonetheless, we estimate the kinetic energy which would be:
+\begin{equation}
+	T_r = \frac{\mu C_r^2}{4}\omega_r^2 = \frac{\mu L^2h^2}{16} \frac{Q^2\omega_0^2}{(1-1/2Q^2)(1-1/4Q^2)} \simeq E_r/2 
+\end{equation}
+where we have ignored once again the denominator terms, negligible for high quality factors. As we expected, the kinetic energy is around half the total energy, and thus the termal noise is negligible when compared to the total or kinetic energy of the system.
 
+One way we could think of measuring the effect of such GW on our system is by letting the GW pass and measuring the difference between the equilibrium state at resonance and the system at rest, after the energy of the GW has been lost to friction from the non-ideality of the spring. After the GW has ceased to transfer energy to the system, the quality factor allows us to estimate the damping time as
+\begin{equation}\label{eq:tau_d}
+	\tau_d = 1 / \gamma = 2Q/\omega_0 \simeq \pi^{-1} 10^3 \text{s} \simeq 0.32\cdot 10^3 \text{s}
+\end{equation}
+
+However a final consideration must be made around the kind of events that could give rise to our GW. In class we have seen the typical frequencies of GW-producing events such as pulsars ($<10^{-6}$Hz), SMBH ($10^{-7/-2}$Hz), and finally compact binaries ($10^{-2 / 2}$Hz). These events have typical energies carried by the GWs that give amplitudes of, respectively, $\simeq 10^{-14}$, $\simeq 10^{-18}$ and $\simeq 10^{-20}$. Then our event, of amplitude $h\simeq 10^{-21}$ would have to fall in the realm of compact binaries, but have frequency at least an order of magnitude smaller than the required frequency to go into resonance with our resonant mass bar. The reason why we could not detect such GW is first of all because there seems to be no event that can generate it. Furthermore, in the case of such event existing, given that amplitudes of GW are inversely proportional to their frequencies, such a GW would have amplitude most likely well below our $h\simeq 10^{-21}$, such that the amplitude of the oscillation of our system at resonance would be significantly smaller than the value we found at Eq.\eqref{eq:C_r} and could fall below the sensibility of our instrument. However, the strongest argument to the impossibility of detecting GWs with resonant mass bars is that the amplitudes we require of the GW in order to measure the oscillation of the masses with the instruments would need frequencies to go into resonance that are much higher than anything known events produce.
+
+As a final piece to this exercise, with the numerical values at hand, we can justify the assumptions we made throughout. Particularly from the beginning we had to assume $L\ll\lambdabar$. These quantities for our system are, considering the GW at resonance with the harmonic oscillator
+\begin{equation}
+	L = 10 \text{m}
+\end{equation}
+\begin{equation}
+	\lambdabar = \frac{c}{\omega_r} \simeq \frac{c}{\omega_0} = \frac{3}{2\pi} 10^5 \text{m} \simeq  0.5\cdot 10^5 \text{m}
+\end{equation}
+which satisfies our assumption.
+
+A second assumption was made by considering as the solution of the equation of motion only the particular solution, thus assuming that the GW persists long after the system has gone through the transient, i.e. when enough time has gone so that the energy absorbed from the GW compensates the loss of energy to non-ideality of the spring. This we can't really justify without having a timespan of the exposure of the system to the incoming GW but we can say that our assumption is valid if this time is $t\gg \tau_d$ as calcuated in Eq.\eqref{eq:tau_d}.
+
+Finally, when calculating the total energy of the system, we only considered kinetic and potential energy (let us call this energy simply $E$), ignoring the fact that the two oscillating masses produce themselves GWs, thus radiating energy ($E_R$). Let us now compare numerically these two energies. We had obtained in Eq.\eqref{eq:E_R} the radiated energy, which we can evaluate at resonance as
+\begin{equation}
+	E_{R,r} \simeq \frac{32\pi}{15} G \mu^2 \left(\frac{\omega_0}{c}\right)^5 C_r^4 \left( 1 + \frac{L^2}{4C_r^2} \right)
+\end{equation}
+already having substituted $\omega_r\simeq\omega_0$. Now using $\omega_0/c\simeq\lambdabar = 0.5\cdot 10^5$m and $C_r\simeq 0.5\cdot 10^{-14}$m, we get
+\begin{equation}
+	E_{R,r} \simeq 2.2\cdot 10^{-58}\text{J}
+\end{equation}
+while we had evaluated the total energy in Eq.\eqref{eq:en_num} and found being
+\begin{equation}
+	E_r \simeq 2.5\cdot 10^{-19}\text{J}
+\end{equation}
+nearly forty orders of magnitude bigger than the radiated energy.
 
 
 \section{Cosmology}
+All light in the Universe gets deflected, especially those photons that travel the longest like the CMB ones. In this exercise we want to understand the basic of CMB lensing.
+\begin{itemize}
+	\item Verify all the equations in Dodelson\&Schmidt, Section 13.3, on CMB lensing. You might need additional expressions from other parts of the same chapter.
+	\item Evaluate the lensed CMB temperature power spectrum using Eq. 13.21. In principle you could compute the lensing power spectrum starting from the attached power spectrum at $z = 0$ and the following cosmological background: $\Omega_m = 0.3$, $\Omega_\Lambda = 1 - \Omega_m - \Omega_r$, and the radiation corresponds to a black body of $T_0 = 2.7$ K. The value of the Hubble constant is $H_0 = 68 $ km/s/Mpc. You will find the CMB lensing power spectrum in the attached files as well. The latter could differ from your calculation at low $\ell$ due to some assumptions made in the Section 13.3, but the two should be broadly consistent. 
+	\item Repeat the first point for CMB polarization. This time what gets shifted is the polarization tensor $Iij$ . Assuming there are no initial $B$ modes, compute the resulting $E$ and $B$ power spectrum. Plot your results.
+\end{itemize}
 
 \subsection{Equations from Section 13.3 - Dodelson\&Schmidt}
+Here we verify one by one the equations from the given section. We will reference explicitely to other necessary equations from previous sections of Dodelson\&Schmidt. 
+
+\subsubsection*{Eq.13.18 - Taylor expansion of observed temperature}
+The observed temperature as a function of the observed position on the two-dimensional sky (in flat-sky approximation) is given by
+
+\begin{align}\label{eq:taylor} 
+	T_{\text{obs}}(\boldsymbol{\theta}) &= T_{\text{true}}(\boldsymbol{\theta} + \Delta\boldsymbol{\theta}[\boldsymbol{\theta}]) \\
+	&\simeq T_{\text{true}}(\boldsymbol{\theta}) + \Delta\theta^i \frac{\partial}{\partial\theta^i}T_{\text{true}}(\boldsymbol{\theta}) + \frac{1}{2}\Delta\theta^i\Delta\theta^j \frac{\partial^2}{\partial\theta^i\partial\theta^j}T_{\text{true}}(\boldsymbol{\theta}) \nonumber ,
+\end{align}
+which is a Taylor expansion up to second order in the deflection angle $\Delta\boldsymbol{\theta}$. 
+
 
 \subsubsection*{Eq.13.19 - Lensing deflection angle}
 
 The lensing deflection angle $\Delta \boldsymbol{\theta}$ is related to the lensing potential $\phi_L$ by:
 \begin{equation}
-    \Delta \boldsymbol{\theta}(\mathbf{l}) = i \, \mathbf{\ell} \, \phi_L(\mathbf{l}),
+    \Delta \boldsymbol{\theta}(\B\ell) = i \, \B\ell \, \phi_L(\B\ell),
 \end{equation}
-which is Dodelson's Eq.13.19, which we can verify starting from the real-space relation:
+which is Dodelson's Eq.13.19, which we can verify starting from the real-space relation  introduced in the previous section (Eq.13.15)
+\begin{equation} \label{eq:deflderiv}
+    \Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \phi_L(\boldsymbol{\theta}).
+\end{equation}
+The lensing potential is defined in Eq. 13.16 as:
 \begin{equation}
-    \Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \phi_L(\boldsymbol{\theta}),
+    \phi_L(\boldsymbol{\theta}) := 2 \int_{0}^{\chi} \frac{d\chi'}{\chi'} \Phi(\mathbf{x}(\boldsymbol{\theta}, \chi')) (1 - \chi'/\chi).
 \end{equation}
-having defined the lensing potential as:
+
+
+We have to use Fourier transforms conventions defined for the two-dimensional flat-sky approximation, between position and multipole space:
 \begin{equation}
-    \phi_L(\boldsymbol{\theta}) \equiv 2 \int_{0}^{\chi} \frac{d\chi'}{\chi'} \Phi(\mathbf{x}(\boldsymbol{\theta}, \chi')) (1 - \chi'/\chi).
+	f(\B\ell) \to e^{-i \B\ell \cdot \boldsymbol{\theta}} f(\boldsymbol{\theta}) \quad ; \quad f(\boldsymbol{\theta}) \to \frac{e^{i \B\ell \cdot \boldsymbol{\theta}}}{(2\pi)^2} f(\B\ell)
+\end{equation}
+Using these we begin writing the lesing potential and the deflection angle as
+\begin{equation} \label{eq:fouriermultipole}
+	\phi_L(\boldsymbol{\theta}) = \int \frac{d^2\ell}{(2\pi)^2} \phi_L(\B\ell) \, e^{i \B\ell \cdot \boldsymbol{\theta}} \quad ; \quad \Delta \theta^i(\boldsymbol{\theta}) = \int \frac{d^2\ell}{(2\pi)^2} \Delta \theta^i(\B\ell) \, e^{i \B\ell \cdot \boldsymbol{\theta}}
+\end{equation}
+Now from Eq. \eqref{eq:deflderiv} substituting $\phi_L(\boldsymbol{\theta})$ with its Fourier in multipole space, we get:
+\begin{equation}
+	\Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \int \frac{d^2\ell}{(2\pi)^2} \phi_L(\B\ell) e^{i\B\ell\cdot\boldsymbol{\theta}} = \int \frac{d^2\ell}{(2\pi)^2} i \ell^i \phi_L(\B\ell) e^{i\B\ell\cdot\boldsymbol{\theta}} 
+\end{equation}
+where we have let the derivative act inside the integral as the two are independent of each other.
+Now comparing this last result with \eqref{eq:fouriermultipole}, we can extract from the integral the equation we were looking for:
+\begin{equation}
+	\Delta \boldsymbol{\theta}(\B\ell) = i \B\ell \, \phi_L(\B\ell)
 \end{equation}
 
+\subsubsection*{Eq.13.20 - Expansion of observed temperature field}
 
-see Fourier $f(\mathbf{l}) \to e^{-i \mathbf{l} \cdot \boldsymbol{\theta}} f(\boldsymbol{\theta}) \quad ; \quad f(\boldsymbol{\theta}) \to \frac{e^{i \mathbf{l} \cdot \boldsymbol{\theta}}}{(2\pi)^2} f(\mathbf{l})$
+The equation we have to verify is effectively the Taylor expansion in Dodelson's Eq. 13.18 (see above, Eq.\eqref{eq:taylor}) of the temperature distribution written for the temperature anysotropies, defined as $\Theta = \frac{T - \langle T \rangle}{\langle T \rangle} = \frac{T}{\langle T \rangle} - 1$ in multipole space:
+\begin{align} \label{eq:anys_to_validate}
+    \Theta_{\text{obs}}(\B\ell) &= \Theta(\B\ell) - \int \frac{d^2\ell_1}{(2\pi)^2} \int \frac{d^2\ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell) \, \B\ell_1 \cdot \B\ell_2 \, \phi(\B\ell_1) \Theta(\B\ell_2) \\
+    &\quad + \frac{1}{2} \int \frac{d^2\ell_1}{(2\pi)^2} \int \frac{d^2\ell_2}{(2\pi)^2} \int \frac{d^2\ell_3}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 + \B\ell_3 - \B\ell) \nonumber \\
+    &\quad \qquad \times (\B\ell_1 \cdot \B\ell_3) \phi(\B\ell_1) (\B\ell_2 \cdot \B\ell_3) \phi(\B\ell_2) \Theta(\B\ell_3) \nonumber
+\end{align}
 
-$\phi_L(\boldsymbol{\theta}) = \int \frac{d^2l}{(2\pi)^2} \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}} \quad ; \quad \Delta \theta^i(\boldsymbol{\theta}) = \int \frac{d^2l}{(2\pi)^2} \Delta \theta^i(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}}$
-    
-from $\Delta \theta^i(\boldsymbol{\theta}) = \frac{\partial}{\partial \theta^i} \phi_L(\boldsymbol{\theta}) \quad$ sub $\phi_L(\boldsymbol{\theta})$ w/ F
+Using $\Theta_{\text{true}} := \Theta$, the Taylor expansion becomes
+\begin{equation}
+	\Theta_{\text{obs}}(\boldsymbol{\theta}) = \Theta(\boldsymbol{\theta} + \Delta\boldsymbol{\theta}[\boldsymbol{\theta}]) \simeq \Theta(\boldsymbol{\theta}) + \Delta\theta^i \frac{\partial}{\partial\theta^i}\Theta(\boldsymbol{\theta}) + \frac{1}{2}\Delta\theta^i\Delta\theta^j \frac{\partial^2}{\partial\theta^i\partial\theta^j}\Theta(\boldsymbol{\theta})
+\end{equation}
 
+We now use the multipole space fourier transforms as defined above, such that
+\begin{align} \begin{split}
+	\Theta_{\text{obs}}(\B\ell) &= \int d^2\theta \, \Theta_{\text{obs}}(\boldsymbol{\theta}) e^{-i \B\ell \cdot \boldsymbol{\theta}} \\
+	&= \int d^2\theta \left[ \Theta(\boldsymbol{\theta}) + \Delta\theta^i \frac{\partial}{\partial\theta^i}\Theta(\boldsymbol{\theta}) + \frac{1}{2}\Delta\theta^i\Delta\theta^j \frac{\partial^2}{\partial\theta^i\partial\theta^j}\Theta(\boldsymbol{\theta}) \right] e^{-i \B\ell \cdot \boldsymbol{\theta}}
+\end{split} \end{align}
+and expanding terms, we get
+\begin{align} \label{eq:anysotr_multipole} 
+	\Theta_{\text{obs}}(\B\ell) = &\int d^2\theta \, \Theta(\boldsymbol{\theta}) e^{-i \B\ell \cdot \boldsymbol{\theta}} + \int d^2\theta \, \Delta\theta^i \left( \frac{\partial}{\partial\theta^i}\Theta(\boldsymbol{\theta}) \right) e^{-i \B\ell \cdot \boldsymbol{\theta}} \\ 
+	&+ \int d^2\theta \, \frac{1}{2} \Delta\theta^i\Delta\theta^j \left( \frac{\partial^2}{\partial\theta^i\partial\theta^j}\Theta(\boldsymbol{\theta}) \right) e^{-i \B\ell \cdot \boldsymbol{\theta}} \nonumber
+\end{align}
+The first term here already is the first term of the taylor expansion. Now we have to make two substitutions, to write both $\Theta(\boldsymbol{\theta})$ and $\Delta\theta^i(\boldsymbol{\theta})$ in terms of $\B\ell$:
+\begin{equation}
+	\Delta\theta^i(\boldsymbol{\theta}) = \int \frac{d^2\ell_1}{(2\pi)^2} \Delta\theta^i(\B\ell_1) e^{i \B\ell_1 \cdot \boldsymbol{\theta}} = \int \frac{d^2\ell_1}{(2\pi)^2} i \ell_1^i \phi_L(\B\ell_1) e^{i \B\ell_1 \cdot \boldsymbol{\theta}}
+\end{equation}
+\begin{equation}
+	\Theta(\boldsymbol{\theta}) = \int \frac{d^2\ell_2}{(2\pi)^2} \Theta(\B\ell_2) e^{i \B\ell_2 \cdot \boldsymbol{\theta}}
+\end{equation}
+
+Now, then the second term of Eq. \eqref{eq:anysotr_multipole} is:
+\begin{align} \begin{split}
+	(2) &= \int d^2\theta \left( \int \frac{d^2\ell_1}{(2\pi)^2} i \ell_1^i \phi_L(\B\ell_1) e^{i \B\ell_1 \cdot \boldsymbol{\theta}} \right) \left( \frac{\partial}{\partial\theta^i} \int \frac{d^2\ell_2}{(2\pi)^2} \Theta(\B\ell_2) e^{i \B\ell_2 \cdot \boldsymbol{\theta}} \right) e^{-i \B\ell \cdot \boldsymbol{\theta}}  \\
+	&= \int d^2\theta \int \frac{d^2\ell_1}{(2\pi)^2} i \ell_1^i \phi_L(\B\ell_1) e^{i \B\ell_1 \cdot \boldsymbol{\theta}} \int \frac{d^2\ell_2}{(2\pi)^2} i \ell_2^i \Theta(\B\ell_2) e^{i \B\ell_2 \cdot \boldsymbol{\theta}} e^{-i \B\ell \cdot \boldsymbol{\theta}} \\
+	&= - \int \frac{d^2\ell_1 d^2\ell_2}{(2\pi)^4} (\B\ell_1 \cdot \B\ell_2) \phi_L(\B\ell_1) \Theta(\B\ell_2) (2\pi)^2 \delta^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell)
+\end{split} \end{align}
+where we have first derivated in $\theta^i$ in the first step and then integrated over $d^2\theta$ the combined expontents with $\B\ell$, $\B\ell_1$  and $\B\ell_2$ which give the Dirac delta.
+
+Finally, the third term:
+\begin{align} \begin{split}
+	(3) &= \frac{1}{2} \int d^2\theta \left( \int \frac{d^2\ell_1}{(2\pi)^2} i \ell_1^i \phi_L(\B\ell_1) e^{i \B\ell_1 \cdot \boldsymbol{\theta}} \right) \left( \int \frac{d^2\ell_2}{(2\pi)^2} i \ell_2^j \phi_L(\B\ell_2) e^{i \B\ell_2 \cdot \boldsymbol{\theta}} \right) \\
+	&\quad \times \left( \frac{\partial^2}{\partial\theta^i\partial\theta^j} \int \frac{d^2\ell_3}{(2\pi)^2} \Theta(\B\ell_3) e^{i \B\ell_3 \cdot \boldsymbol{\theta}} \right) e^{-i \B\ell \cdot \boldsymbol{\theta}} \\
+	&= \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2 d^2\ell_3}{(2\pi)^2 (2\pi)^2 (2\pi)^2} (\B\ell_1 \cdot \B\ell_3) (\B\ell_2 \cdot \B\ell_3) \phi_L(\B\ell_1) \phi_L(\B\ell_2) \Theta(\B\ell_3) \delta^{(2)}(\B\ell_1 + \B\ell_2 + \B\ell_3 - \B\ell)
+\end{split} \end{align}
+where once again the derivatives with respect to $\theta^i$ and $\theta^j$ give $i\ell^i_3$ and $i\ell^j_3$ respectively, and finally the integration over $\theta$ of the exponential gives the Dirac delta term.
+
+Thus one by one we have verified the terms to make \eqref{eq:anys_to_validate}.
+
+\subsubsection*{Eq.13.21 - Lensed temperature power spectrum}
+Here we have to verify that the power spectrum of $\Theta_{\text{obs}}$ becomes
+\begin{align}\label{eq:obsexpansion}
+	C^{\text{obs}}(\ell) &= C(\ell) + C^{(22)}(\ell) + 2C^{(13)}(\ell) \\
+	C^{(22)}(\ell) &= \int \frac{d^2\ell_1}{(2\pi)^2} \left[ \B\ell_1 \cdot (\B\ell - \B\ell_1) \right]^2 C_{\phi\phi}(\ell_1) C(|\B\ell - \B\ell_1|) \nonumber \\
+	C^{(13)}(\ell) &= -\frac{1}{4} \left[ \int \frac{d^2\ell_1}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] \ell^2 C(\ell) \nonumber
+\end{align}
+where the temperature power spectrum is defined as 
+\begin{equation}\label{eq:Cl}
+	\langle \Theta(\B\ell)\Theta^*(\B\ell')\rangle = \delta_D^{(2)}(\B\ell-\boldsymbol{\ell'})C(\ell)
+\end{equation}	
+while the lensing potential power spectrum as 
+\begin{equation}
+	\langle \phi_L(\B\ell)\phi_L^*(\boldsymbol{\ell'})\rangle = (2\pi)^2\delta_D^{(2)}(\B\ell-\boldsymbol{\ell'})C_{\phi\phi}(\ell)
+\end{equation}
+which is actually Eq.13.22 which we don't have to derive as it is a definition. Another important property the reality condition of the lensing potential:
+\begin{equation}\label{eq:phireal}
+	\phi^*_L(\ell)=\phi_L(-\ell)
+\end{equation}
+
+We start from the expression for $\Theta_{\text{obs}}(\B\ell)$ calculated in the previous section including up to second-order terms, i.e. calling the term that was above $(2)\to\delta\Theta^{(1)}(\B\ell)$ and similarly $(3)\to\delta\Theta^{(2)}(\B\ell)$. We can simplify both of them from above by integrating over one of the $\ell$'s the delta functions, obtaining
+\begin{align}
+	\delta \Theta^{(1)}(\B\ell) &= -\int \frac{d^2\ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B\ell - \B\ell_1) \phi_L(\B\ell_1) \Theta(\B\ell-\B\ell_1) \\
+	\delta \Theta^{(2)}(\B\ell) &= \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2}{(2\pi)^4} (\B\ell_1 \cdot (\B\ell-\B\ell_1-\B\ell_2))(\B\ell_2 \cdot (\B\ell-\B\ell_1-\B\ell_2)) \phi_L(\B\ell_1) \phi_L(\B\ell_2) \Theta(\B\ell-\B\ell_1-\B\ell_2)
+\end{align}
+
+Now the power spectrum being $\langle \Theta_{\text{obs}}(\B\ell)\Theta^*_{\text{obs}}(\B\ell)\rangle$, we have to expand this term by term. However, we can consider that since the metric potential $\Phi$ which acts as a source to our lensing potential $\phi_L$ is a perturbation of the homogeneous FLRW metric, and as a perturbation from its mean value, the potential has null average. Thus all terms with an odd number of $\phi_L$ vanish. Furthermore we are assuming that the fields are uncorrelated, i.e. $\langle \phi_L \Theta \rangle = 0$.
+Using this, the remaining terms are:
+\begin{equation}
+	C^{\text{obs}}(\ell) = \langle \Theta(\B\ell)\Theta^*(\B\ell) \rangle + \langle \delta\Theta^{(1)}(\B\ell) \delta\Theta^{(1)*}(\B\ell) \rangle + \langle \Theta(\B\ell) \delta\Theta^{(2)*}(\B\ell) \rangle + \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle
+\end{equation}
+The first gives exactly the $C(\ell)$, while we have to show that the last two are the same and give $2C^{(13)}(\ell)$, and the second is $C^{(22)}(\ell)$.
+
+Let's start from the second term.
+\begin{equation}
+	\langle \delta\Theta^{(1)} \delta\Theta^{(1)*} \rangle = \int\frac{d^2\ell_1d^2\ell_2}{(2\pi)^4}\B\ell_1 \cdot (\B\ell - \B\ell_1) \B\ell_2 \cdot (\B\ell - \B\ell_2) \langle \phi_L(\B\ell_1) \Theta(\B\ell-\B\ell_1)\phi_L^*(\B\ell_2) \Theta^*(\B\ell-\B\ell_2)\rangle 
+\end{equation}
+Here the spatial average is carried out using Wick's theorem: we have to make all possible two.point correlators of the fields, where however only one survives, the one where we have $\langle \phi_L \phi_L^* \rangle \langle \Theta \Theta^* \rangle$ since the different fields are uncorrelated as already said. Then the definition of $C_{\phi\phi}$ produces a delta $\delta_D^{(2)}(\B\ell_1 - \B\ell_2)$ which we use to integrate over $d^2\ell_2$ to get
+\begin{equation}
+	\langle \delta\Theta^{(1)} \delta\Theta^{(1)*} \rangle = \int \frac{d^2\ell_1}{(2\pi)^2} [\B\ell_1 \cdot (\B\ell - \B\ell_1)]^2 C_{\phi\phi}(\ell_1) C(|\B\ell - \B\ell_1|) \equiv C^{(22)}(\ell)
+\end{equation}
+Now onto the last two terms, calling $\boldsymbol{L}=\B\ell-\B\ell_1-\B\ell_2$:
+\begin{align} \begin{split}
+	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle &=  \frac{1}{2} \int \frac{d^2\ell_1 d^2\ell_2 }{(2\pi)^4} (\B\ell_1 \cdot \boldsymbol{L})(\B\ell_2 \cdot \boldsymbol{L}) \\
+	&\quad \times \big[ \langle \Theta(\B\ell) \phi_L^*(\B\ell_1) \phi_L^*(\B\ell_2) \Theta^*(\boldsymbol{L})\rangle + \langle \Theta^*(\B\ell) \phi_L(\B\ell_1) \phi_L(\B\ell_2) \Theta(\boldsymbol{L}) \rangle \big]
+\end{split} \end{align}
+Now using once again Wick's theorem to save only the non-zero contractions, and the definition of lensing potential power spectrum which gives a factor $\delta^{(2)}_D(\B\ell_1+\B\ell_2)$, we can see that the two spatial averages are the same, giving a factor of two:
+\begin{equation} \label{eq:almost_c_13}
+	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle = - \int \frac{d^2\ell_1}{(2\pi)^2} (\B\ell \cdot \B\ell_1)^2 C_{\phi\phi}(\ell_1) C(\ell)
+\end{equation}
+Now to get to the final form given in Dodelson, we have to manipulate the geometric factor. 
+\begin{equation}
+    \begin{split}
+        \int d^2\ell_1(\B\ell \cdot \B\ell_1)^2 &= \ell^2 \int_0^\infty \ell_1^3d\ell_1\int_0^{2\pi}d\varphi \cos^2\varphi = \pi \ell^2 \int_0^\infty d\ell_1 \ell_1^3 \\
+        \int d^2\ell_1 \ell_1^2 &= \int_0^\infty \ell_1^3 d\ell_1\int_0^{2\pi}d\varphi = 2\pi \int_0^\infty d\ell_1 \ell_1^3
+    \end{split}
+\end{equation}
+and comparing these two we can state that 
+\begin{equation}
+	\int d^2\ell_1 (\B\ell \cdot \B\ell_1)^2 = \frac{\ell^2}{2} \int d^2\ell_1\ell_1^2
+\end{equation}
+such that, from Eq.\eqref{eq:almost_c_13}, we have
+\begin{equation}
+	\langle \Theta \delta\Theta^{(2)*} \rangle +  \langle \Theta^*(\B\ell) \delta\Theta^{(2)}(\B\ell) \rangle = -\frac{\ell^2}{2} \left[ \int \frac{d^2\ell_1}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] C(\ell) \equiv 2C^{(13)}(\ell)
+\end{equation}
+having thus shown term by term all factors of the taylor expansion of the power spectrum up to $\mathcal{O}(\phi_L^2)$. In fact, other combinations, such as $\langle \delta\Theta^{(2)} \delta\Theta^{(2)*} \rangle$ gave terms of $\mathcal{O}(\phi_L^4)$.
+
+\subsubsection*{Eq.13.22 - Power spectrum of lensing potential}
+
+\begin{equation}
+	\langle \phi_L(\B\ell)\phi_L^*(\boldsymbol{\ell'})\rangle = (2\pi)^2\delta_D^{(2)}(\B\ell-\boldsymbol{\ell'})C_{\phi\phi}(\ell)
+\end{equation}
+This equation is a definition and does not need to be verified. 
+
+\subsubsection*{\texorpdfstring{Eq.13.23 - Temperature correlator with different $\ell$s}{Eq.13.23 - Temperature correlator with different ls}}
+
+\begin{equation} \label{eq:13.23}
+    \begin{aligned}
+        \langle \Theta&_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} \overset{\B\ell' \neq \B\ell}{=} \\
+        &= - \int \frac{d^2 \ell_1}{(2\pi)^2} \Big[ \phi_L^*(\B\ell_1) \B\ell_1 \cdot (\B\ell' - \B\ell_1) \langle \Theta(\B\ell) \Theta^*(\B\ell' - \B\ell_1) \rangle + \phi_L(\B\ell_1) \B\ell_1 \cdot (\B\ell - \B\ell_1) \langle \Theta(\B\ell - \B\ell_1) \Theta^*(\B\ell') \rangle \Big] \\
+        &=  \phi_L(\B\ell - \B\ell') (\B\ell - \B\ell') \cdot [ \B\ell C(\ell) - \B\ell' C(\ell') ] \ .
+    \end{aligned}
+\end{equation}
+This equation gives the correlator between two lensed modes of the CMB temperature anisotropy distributions $\Theta_{\text{obs}}(\B \ell)$, having different values of $\B\ell$.
+The correlator is computed by averaging over the primary CMB fluctuations while keeping the lensing potential $\phi_L$ fixed. 
+
+We therefore calculate the correlator, starting again from the expansion Eq.\eqref{eq:anys_to_validate} and considering only first-order terms in $\phi_L$:
+\begin{equation}
+\begin{aligned}
+    \langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \ \langle \Theta(\B\ell) \Theta^*(\B\ell') \rangle + \\
+        & - \left\langle \Theta(\B\ell) \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell') (\B\ell_1 \cdot \B\ell_2) \phi_L^*(\B\ell_1) \Theta^*(\B\ell_2) \right\rangle + \\
+        & - \left\langle \Theta^*(\B\ell') \int \frac{d^2 \ell_1}{(2\pi)^2} \int \frac{d^2 \ell_2}{(2\pi)^2} (2\pi)^2 \delta_{\text{D}}^{(2)}(\B\ell_1 + \B\ell_2 - \B\ell) (\B\ell_1 \cdot \B\ell_2) \phi_L(\B\ell_1) \Theta(\B\ell_2) \right\rangle \ .
+\end{aligned}
+\end{equation}
+The first term vanishes because the unlensed modes with different $\B\ell$ are uncorrelated; furthermore, we have neglected the second-order terms present in the expansion \eqref{eq:anys_to_validate}.
+At this stage, integrating over $\B\ell_2$ in both remaining terms, the first Dirac delta imposes $\B\ell_2 = \B\ell' - \B\ell_1$, while the second imposes $\B \ell_2 = \B \ell - \B \ell_1$.
+The mean value operation commutes with the integral over $\B \ell_1$; additionally, the potential $\phi_L$ can be taken out of the expectation value as it is treated as fixed.
+We thus obtain:
+\begin{equation}
+	\begin{aligned}
+    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' - \B \ell_1) \phi_L^*(\B\ell_1) \langle \Theta(\B \ell) \Theta^*(\B \ell' - \B \ell_1) \rangle + \\
+    	& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell - \B \ell_1) \phi_L(\B\ell_1) \langle \Theta^*(\B \ell - \B \ell_1) \Theta(\B \ell') \rangle \ .
+	\end{aligned}
+\end{equation}
+
+Recalling definition \eqref{eq:Cl} and using the fact that $\phi_L(\B \ell)$ is real (see Eq.\eqref{eq:phireal}), we can perform the substitution $\B \ell_1 \to -\B\ell_1$ in the first integral, obtaining:
+\begin{equation}
+	\begin{aligned}
+    	\langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L} =& \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell' + \B \ell_1) \phi_L(\B\ell_1) C(\ell) \delta_D^{(2)}(\B \ell - \B \ell' - \B \ell_1) + \\
+    	& - \int \frac{d^2 \ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B \ell - \B\ell_1) \phi_L(\B\ell_1) C(\ell') \delta_D^{(2)}(\B \ell' - \B \ell + \B \ell_1) \ .
+	\end{aligned}
+\end{equation}
+
+Finally, integrating the two terms, both Dirac deltas impose $\B\ell_1 = \B\ell - \B\ell'$, yielding:
+
+\begin{equation}
+\begin{aligned}
+    \langle \Theta_{\text{obs}}(\B\ell) \Theta_{\text{obs}}^*(\B\ell') \rangle \Big|_{\phi_L}& = (\B\ell - \B\ell') \cdot \B\ell \phi_L(\B\ell - \B\ell') C(l) - (\B\ell - \B\ell') \cdot \B\ell' \phi_L(\B\ell - \B\ell') C(l') = \\
+        & = (\B\ell - \B\ell') \phi_L(\B\ell - \B\ell') \cdot [\B\ell C(l) - \B\ell' C(l')] \ ,
+\end{aligned}
+\end{equation}
+
+in doing so, we have recovered Eq.\eqref{eq:13.23}.
+
+
+
+\subsection{Lensed CMB temperature power spectrum}
+
+Gravitational lensing of the Cosmic Microwave Background (CMB) provides a powerful probe of the projected mass distribution in the universe. As CMB photons propagate from the last scattering surface (at recombination, $z_r \approx 1089$) to the observer, their trajectories are deflected by the gradients of the gravitational potential generated by large scale structure. In this exercise, we evaluate the impact of this remapping on the CMB power spectra, assuming a standard flat $\Lambda$CDM cosmology with $\Omega_m = 0.3$ and $H_0 = 68$ km/s/Mpc. 
+
+The operative part of the exercise is carried out in the repository available on my personal \href{https://github.com/tommasoperitoree/AdvancedGravitationalPhysiscs}{GitHub/tommasoperitoree}. I will include here the derivations that were necessary to construct the Python analysis and some results. 
+
+For the temperature anisotropies, the lensing effect is computed using the perturbative expansion derived in Dodelson\& Schmidt (Eq.\eqref{eq:obsexpansion}). Firstly, however we had to derive the power spectrum of the lensing potential in multipole space,
+\begin{equation}
+	C_{\phi\phi}(\ell) = \frac{4}{\ell^4} C_{\kappa\kappa}(\ell)
+\end{equation}
+where, from Sec.13.4,5, the convergence power spectrum is (see specifically Eq.13.51 and previous):
+\begin{equation}
+	C_{\kappa\kappa} (\ell) = \left(\frac32\Omega_mH_0^2\right)^2 \int_0^\infty d\chi (1+z)^2 g_L^2(\chi) P \left( k=\frac{\ell}{\chi},\eta(\chi) \right)
+\end{equation}
+where the Limber approximation is used, the gravitational kernel is defined as
+\begin{equation}
+	g_L(\chi) = 1 - \frac{\chi(z)}{\chi(z_r)}
+\end{equation}
+To take the matter power spectrum we were given from today $P(k,z=0)$ back to the CMB, we used the growing factor
+\begin{equation}
+	D(z) = \int_z^\infty dz' \frac{1+z'}{H(z')^3}
+\end{equation}
+such that $P(k,z) = P(k)\cdot D^2(z)$. The Hubble constant in our universe is 
+\begin{equation}
+	H(z) = H_0 \left[\Omega_m(1+z)^3 + \Omega_r(1+z)^4 +\Omega_\Lambda\right]^{1/2}
+\end{equation}
+The obtained $C_{\kappa\kappa}(\ell)$ compared with the one provided in the data file is shown in the following figure
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/convergence_spec_comp.png}
+    \caption{Comparison between the convergence power spectrum provided and the one obtained from power spectrum $P(k,z=0)$.}
+    \label{fig:convergence_spec_comp}
+\end{figure}
+
+These preliminaries allowed us to be ready to tackle \eqref{eq:obsexpansion} for the temperature spectrum, i.e. with $C(\ell) = C_{TT}(\ell)$. 
+
+At this point the struggle is simply to construct a python code that handles the integrals we need. This required us to manipulate further the terms of the expansion.	
 \begin{equation*}
-= \frac{\partial}{\partial \theta^i} \int \frac{d^2l}{(2\pi)^2} \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}} = \int \frac{d^2l}{(2\pi)^2} \, i l^i \, \phi_L(\mathbf{l}) \, e^{i \mathbf{l} \cdot \boldsymbol{\theta}}
+	C_{TT}^{\text{obs}}(\ell) = C_{TT}(\ell) + C_{TT}^{(22)}(\ell) + 2C_{TT}^{(13)}(\ell)
 \end{equation*}
+we need to make here the assumption of isotropy, such that $\B\ell = (\ell, 0)$ and the other coordinate in the integrals $\B\ell_1 = (\ell_1 \cos\theta, \ell_1 \sin\theta)$ in flat-sky approximation with $\theta$ then being the angle with respect to $\ell$. 
 
-\noindent comparing \quad $\Delta \boldsymbol{\theta}(\mathbf{l}) = i \mathbf{l} \, \phi_L(\mathbf{l})$
+Then we have
+\begin{align}
+	C_{TT}^{(13)}(\ell) &= -\frac{1}{4} \left[ \int \frac{d^2\ell_1}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] \ell^2 C_{TT}(\ell) \\
+	&= -\frac{1}{4} \left[ \int \frac{\ell_1 d\ell_1 d\theta}{(2\pi)^2} \ell_1^2 C_{\phi\phi}(\ell_1) \right] \ell^2 C_{TT}(\ell) \\
+	&= -\frac{1}{4} \sigma^2 \, \ell^2 C_{TT}(\ell)
+\end{align}
+having defined the variance of the deflection angle magnitude
+\begin{equation}
+	\sigma^2 = \frac{1}{2\pi} \int d\ell_1 \ell_1^3 C_{\phi\phi}(\ell_1)
+\end{equation}
 
+The other term becomes
+\begin{align}
+	C_{TT}^{(22)}(\ell) &= \int \frac{d^2\ell_1}{(2\pi)^2} \left[ \B\ell_1 \cdot (\B\ell - \B\ell_1) \right]^2 C_{\phi\phi}(\ell_1) C_{TT}(|\B\ell - \B\ell_1|) \\
+	&= \int \frac{\ell_1 d\ell_1 d\theta}{(2\pi)^2} \left[ \ell_1 \ell \cos\theta - \ell_1^2 \right]^2 C_{\phi\phi}(\ell_1) C_{TT}\left( \sqrt{\ell^2 + \ell_1^2 - 2\ell\ell_1 \cos\theta} \right)
+\end{align}
+These are the forms we have provided the code in order to carry out the integrals with trapezoidal integration schemes and we show below the obtained results. From here on, we will call the unlensed spectrums simply $C(\ell)$ while the lensed ones $\widetilde{C}(\ell)$.
 
-\subsection{Exercise 13.7 - Dodelson\&Schmidt}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/cmb_TT_lensing_eff.png}
+    \caption{The effect of gravitational lensing on the CMB temperature power spectrum. The unlensed spectrum (blue) is smoothed by lensing (orange).}
+    \label{fig:cmb_TT_lensing}
+\end{figure}
+From the single lensing terms we can see that they actually become of order of the unlensed spectrum at high $\ell$s but since their signs are opposite their effect is minimal. Specifically, they act smoothing out the peaks of the lensing.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/cmb_TT_lensing_terms.png}
+    \caption{The terms of the expansion of gravitational lensing on the CMB temperature power spectrum.}
+    \label{fig:cmb_TT_lensing_terms}
+\end{figure}
+We also show a graph of the fractional difference between the lensed and unlensed spectrum, to see that lensing brings about at most a $13\%$ smoothing of the spectrum.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/fractional_TT_lensing.png}
+    \caption{Fractional difference between lensed and unlensed, i.e. $(\widetilde{C}(\ell)-C(\ell)) / C(\ell)$.}
+    \label{fig:frac_TT_lensing_terms}
+\end{figure}
 
-\subsection{CMB Polarization}
+\subsection{Lensed CMB polarization}
+To carry out the same analysis but this time on polarization, i.e. lensing the CMB $EE$-mode, we have to derive a few relations.
 
+Starting from Dodelson's Ch.10 on the polarized CMB, the traceless polarization tensor can be written as
+\begin{equation}
+	I_{ij} = \begin{pmatrix} Q & U \\
+    						U & - Q \end{pmatrix}
+\end{equation}
+where $Q$ and $U$ are (Stokes) parameters used to describe polarization. In a more useful way, we can find that such polarization can be written in terms of scalar and tensor components, which are what we call $E$ and $B$ modes respectively (see Eq.10.7,10.9 from Dodelson):
+\begin{align}
+	Q(\B\ell) &= E(\B\ell) \cos 2\varphi_\ell - B(\B\ell) \sin 2\varphi_\ell \label{eq:Ql} \\
+	U(\B\ell) &= E(\B\ell) \sin 2\varphi_\ell + B(\B\ell) \cos 2\varphi_\ell \label{eq:Ul}
+\end{align}
+
+These relations will also be true on the lensed fields, and we can invert them to find
+\begin{align}
+	\widetilde{E}(\ell) & = \widetilde{Q}(\ell)\cos 2\varphi_\ell + \widetilde{U}(\ell)\sin 2\varphi_\ell \\
+	\widetilde{B}(\ell) & = -\widetilde{Q}(\ell)\sin 2\varphi_\ell + \widetilde{U}(\ell)\sin 2\varphi_\ell
+\end{align}
+
+From these we can finally define the lensed spectrums of the $EE$ and $BB$ modes.
+\begin{align}
+	\widetilde{C}_{EE}(\ell) &= \langle \widetilde{E}(\B\ell) \widetilde{E}(\B\ell) \rangle = \langle \widetilde{Q} \widetilde{Q} \rangle \cos^2 2\varphi_\ell + 2\langle \widetilde{Q}\widetilde{U} \rangle \sin 2\varphi_\ell \cos 2\varphi_\ell + \langle \widetilde{U}\widetilde{U} \rangle \sin^2 2\varphi_\ell	\\
+	\widetilde{C}_{BB}(\ell) &= \langle \widetilde{B}(\B\ell) \widetilde{B}(\B\ell) \rangle = \langle \widetilde{Q} \widetilde{Q} \rangle \sin^2 2\varphi_\ell - 2\langle \widetilde{Q}\widetilde{U} \rangle \sin 2\varphi_\ell \cos 2\varphi_\ell + \langle \widetilde{U}\widetilde{U} \rangle \cos^2 2\varphi_\ell
+\end{align}
+
+Let's expand the lensed $\widetilde{Q}(\B\ell)$ as we did before with the $TT$ spectrum, using \eqref{eq:Ql} and \eqref{eq:obsexpansion} and calling again $\B L = \B\ell -\B\ell_1 -\B\ell_2$,
+\begin{align*}
+	\widetilde{Q}(\B\ell) &= E(\ell) \cos 2\varphi_\ell - \int \frac{d^2\ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B\ell-\B\ell_1) \phi_L(\B\ell_1) E(\B\ell-\B\ell_1) \cos 2\varphi_{\ell\ell_1} \\
+	&\quad +\frac{1}{2} \int \frac{d^2\ell_1d^2\ell_2}{(2\pi)^4} [\B\ell_1 \cdot \B L] [\B\ell_2 \cdot \B L] \phi_L(\B\ell_1) \phi_L(\B\ell_2) E(\B L) \cos 2\varphi_{\ell\ell_1\ell_2}
+\end{align*}
+where we have defined $\varphi_{\ell\ell_1} := \varphi_{\B\ell-\B\ell_1}$, i.e. the angle of the vector $\B\ell-\B\ell_1$ to $\B\ell$ in the 2D flat sky. Similarly, $\widetilde{U}(\B\ell)$ is obtained from $\widetilde{Q}(\B\ell)$ by changing $ \cos 2\varphi_\ell\to \sin 2\varphi_\ell$ throughout.
+
+Now we can make term by term what we need to find the lensed power spectrums.
+\begin{align}
+	\langle \widetilde{Q}(\B\ell) \widetilde{Q}(\B\ell) \rangle &= C_{EE}(\ell) \cos^2 2\varphi_\ell - \frac{1}{2} \sigma^2 \ell^2 C_{EE}(\ell) \cos^2 2\varphi_\ell \\
+	&\qquad + \int \frac{d^2\ell_1}{(2\pi)^2} \left( \B\ell_1 \cdot (\B\ell-\B\ell_1) \right)^2 C_{EE}(|\B\ell-\B\ell_1|) C_{\phi\phi}(\ell_1) \cos^2 2\varphi_{\ell\ell_1} \nonumber \\
+	\langle \widetilde{U}(\B\ell) \widetilde{U}(\B\ell) \rangle &= C_{EE}(\ell) \sin^2 2\varphi_\ell - \frac{1}{2} \sigma^2 \ell^2 C_{EE}(\ell) \sin^2 2\varphi_\ell \\
+	&\qquad + \int \frac{d^2\ell_1}{(2\pi)^2} \left( \B\ell_1 \cdot (\B\ell-\B\ell_1) \right)^2 C_{EE}(|\B\ell-\B\ell_1|) C_{\phi\phi}(\ell_1) \sin^2 2\varphi_{\ell\ell_1} \nonumber \\
+	\langle \widetilde{Q}(\B\ell) \widetilde{U}(\B\ell) \rangle &= C_{EE}(\ell) \sin 2\varphi_\ell \cos 2\varphi_\ell - \frac{1}{2} \sigma^2 \ell^2 C_{EE}(\ell) \cos^2 2\varphi_\ell \\
+	&\qquad + \int \frac{d^2\ell_1}{(2\pi)^2} \left( \B\ell_1 \cdot (\B\ell-\B\ell_1) \right)^2 C_{EE}(|\B\ell-\B\ell_1|) C_{\phi\phi}(\ell_1) \cos 2\varphi_{\ell\ell_1} \sin 2\varphi_{\ell\ell_1} \nonumber
+\end{align}
+
+Thus we can calculate the lensed spectrums by substitution and manipulation of the angular terms, obtaining:
+\begin{align}
+	\widetilde{C}_{EE}(\ell) & = C_{EE}(\ell) \left[ 1 - 2\sigma^2 \ell^2 \right] \\
+	&\qquad + \int \frac{d^2\ell_1}{(2\pi)^2} \left( \B\ell_1 \cdot (\B\ell - \B\ell_1) \right)^2 C_{EE}(|\B\ell - \B\ell_1|) C_{\phi\phi}(\ell_1) \cos^2 2(\varphi_\ell - \varphi_{\ell\ell_1}) \\
+	\widetilde{C}_{BB}(l) &= \int \frac{d^2\ell_1}{(2\pi)^2} \left( \B\ell_1 \cdot (\B\ell - \B\ell_1) \right)^2 C_{EE}(|\B\ell - \B\ell_1|) C_{\phi\phi}(\ell_1) \sin^2 2(\varphi_\ell - \varphi_{\ell\ell_1})
+\end{align}
+
+Once again to obtain expressions that are integratable with Python we had to manipulate the angular dependencies. Chosing once again $\B\ell=(\ell,0)$ and $\B\ell_1=\ell_1(\cos\varphi_{\ell_1}, \sin\varphi_{\ell_1})$, we then obtain $\B\ell - \B\ell_1 = (\ell -\ell\cos\varphi_{\ell_1}, -\ell_1 \sin\varphi_{\ell_1})$ such that 
+\begin{equation}
+	\varphi_{\ell\ell_1} = \arctan\left(-\frac{\ell_1 \sin\varphi_{\ell_1}}{\ell -\ell\cos\varphi_{\ell_1}}\right)
+\end{equation}
+For more details on the implementation and the code used, see again \href{https://github.com/tommasoperitoree/AdvancedGravitationalPhysiscs}{GitHub/tommasoperitoree}.
+
+Some of the plots obtained are shown below.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/pol_lensing_terms.png}
+    \caption{Lesing effect on $EE$ mode from the CMB.}
+    \label{fig:pol_lensing}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../images/pol_lensing_terms.png}
+    \caption{Comparison between the $EE$ and $BB$ modes}
+    \label{fig:pol_lensing_terms}
+\end{figure}
 
 \end{document}
