@@ -9,7 +9,7 @@ This repository contains the solutions to the "Advanced Gravitational Physics" c
 
 ## Repository Structure
 
-* **`main.pdf`**
+* **`exam.pdf`**
     The comprehensive project report. It contains:
     * **Part 1 (GW):** Full analytical derivation of the equation of motion for a resonant mass detector, solution for the steady state, and energy calculations following the formalism of *Maggiore*.
     * **Part 2 (Cosmology):** Derivation of the lensed CMB power spectra equations (Temperature and Polarization) following the formalism of *Dodelson & Schmidt*.
@@ -30,7 +30,7 @@ This repository contains the solutions to the "Advanced Gravitational Physics" c
 ## Part 1: Gravitational Wave Detection
 *Theory Reference: Maggiore, Vol. 1*
 
-This section (detailed in `main.pdf`) explores the physics of a resonant mass detector modeled as two masses connected by a spring. Key derivations include:
+This section (detailed in `exam.pdf`) explores the physics of a resonant mass detector modeled as two masses connected by a spring. Key derivations include:
 * The equation of motion for the system under the influence of a passing GW ($h_+$ polarization).
 * The resonant frequency and quality factor analysis.
 * Calculation of the system's total energy and the radiated energy.
@@ -39,7 +39,7 @@ This section (detailed in `main.pdf`) explores the physics of a resonant mass de
 ## Part 2: CMB Lensing
 *Theory Reference: Dodelson & Schmidt, Modern Cosmology (2nd Ed), Chapter 13*
 
-This section combines analytical derivations (`main.pdf`) with numerical results (`exam.ipynb`).
+This section combines analytical derivations (`exam.pdf`) with numerical results (`exam.ipynb`).
 
 ### Physics
 We analyze how Large Scale Structure deflects CMB photons.
