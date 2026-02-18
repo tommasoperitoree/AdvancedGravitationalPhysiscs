@@ -194,7 +194,7 @@ We had, as the full o.d.e. $\ddot{r} + 2\gamma \dot{r} + \omega_0^2 r = -\frac{h
     -C\omega^2 \cos(\omega t + \phi) - 2\gamma C \omega \sin(\omega t + \phi) + C \omega_0^2 \cos(\omega t + \phi) + \frac{h}{2} L \omega^2 \cos(\omega t) = 0
 \end{equation}
 
-To solve this we go use a trick: going into complex field we define $z(t)$ such that $r(t) = \text{Re}[z(t)]$ and the driving force is $\text{Re}\left[-\frac{h}{2} L \omega^2 e^{i\omega t}\right]$. 
+To solve this we use a trick: going into complex field we define $z(t)$ such that $r(t) = \text{Re}[z(t)]$ and the driving force is $\text{Re}\left[-\frac{h}{2} L \omega^2 e^{i\omega t}\right]$. 
 Here, our equation of motion can be defined as 
 \begin{equation}
 	\text{Re}\left[ \ddot{z} + 2\gamma \dot{z} + \omega_0^2 z = \frac{-h}{2} L \omega^2 e^{i\omega t}\right]
@@ -273,17 +273,17 @@ M^{ij}(t) &= \int d^3x \, \rho(t, \mathbf{x}) x^i x^j \\
 &= \mu x^2(t) \delta^{i1} \delta^{j1}
 \end{split}\end{align}
 
-Substituting this into Eq. 3.72 we have to remember that our $x$ coordinate is there the $z$ coordinate, so our only non-zero second mass moment $M^{11}$ is called there $M_{33} $. We then obtain
+Substituting this into Eq. 3.72 we have to remember that our $x$ coordinate is there the $z$ coordinate, so our only non-zero second mass moment $M^{11}$ is called there $M_{33} $ and is calculated at $t_r = t + r/c$ the retarded time at which the signal is evaluated. We then obtain
 \begin{align} \begin{split}
-	h_+(t; \theta, \phi) &= -\frac{1}{r} \frac{G}{c^4} \ddot{M}_{11}(t_{\text{ret}}) \sin^2 \theta \\
-	&= \frac{2G\mu \omega^2}{r c^4} \sin^2 \theta \left[ C^2 \cos(2\omega t_{\text{ret}}) + LC\cos(\omega t_{\text{ret}})\right]
+	h_+(t; \theta, \phi) &= -\frac{1}{r} \frac{G}{c^4} \ddot{M}_{11}(t_r) \sin^2 \theta \\
+	&= \frac{2G\mu \omega^2}{r c^4} \sin^2 \theta \left[ C^2 \cos(2\omega t_r) + LC\cos(\omega t_r)\right]
 \end{split} \end{align}
-Then we have
+Then derivating and elevating, we have
 \begin{equation}
-	\dot{h}^2_+(t;\theta,\phi) \propto \omega^2\sin^4(\theta)\left[4C^2 \sin^2(2\omega t) + L^2 \sin^2 (\omega t) + 2CL\sin(2\omega t)\sin(\omega t)\right]
+	\dot{h}^2_+(t;\theta,\phi) \propto \omega^2\sin^4(\theta)\left[4C^2 \sin^2(2\omega t_r) + L^2 \sin^2 (\omega t_r) + 2CL\sin(2\omega t_r)\sin(\omega t)\right]
 \end{equation}
 
-Here have periodic terms with different periods, thus we have to chose the bigger of the two to carry out the integration: $T= 2\pi/\omega$. The first term we get is:
+Here have periodic terms with different periods, thus we have to chose the bigger of the two to carry out the integration: $T= 2\pi/\omega$. During integration, the $t_r$ can be substituted with $t$ as a shift of a constant does not change the value of the integral over a period. The first term we get is:
 \begin{align}
 	\langle \sin^2(2\omega t)\rangle_T &= \frac{1}{T}\int_0^T dt \sin^2(2\omega t) = \frac{1}{T}\left(\int_0^{\pi / \omega }+ \int_{\pi / \omega}^{2\pi/\omega}\right) dt \sin^2(2\omega t) = \frac{\omega}{2\pi} \left( 2\cdot\frac{\pi}{2\omega}\right) = \frac12
 \end{align}
@@ -597,7 +597,7 @@ Let's start from the second term.
 \begin{equation}
 	\langle \delta\Theta^{(1)} \delta\Theta^{(1)*} \rangle = \int\frac{d^2\ell_1d^2\ell_2}{(2\pi)^4}\B\ell_1 \cdot (\B\ell - \B\ell_1) \B\ell_2 \cdot (\B\ell - \B\ell_2) \langle \phi_L(\B\ell_1) \Theta(\B\ell-\B\ell_1)\phi_L^*(\B\ell_2) \Theta^*(\B\ell-\B\ell_2)\rangle 
 \end{equation}
-Here the spatial average is carried out using Wick's theorem: we have to make all possible two.point correlators of the fields, where however only one survives, the one where we have $\langle \phi_L \phi_L^* \rangle \langle \Theta \Theta^* \rangle$ since the different fields are uncorrelated as already said. Then the definition of $C_{\phi\phi}$ produces a delta $\delta_D^{(2)}(\B\ell_1 - \B\ell_2)$ which we use to integrate over $d^2\ell_2$ to get
+Here the spatial average is carried out using Wick's theorem: we have to make all possible two-point correlators of the fields, where however only one survives, the one where we have $\langle \phi_L \phi_L^* \rangle \langle \Theta \Theta^* \rangle$ since the different fields are uncorrelated as already said. Then the definition of $C_{\phi\phi}$ produces a delta $\delta_D^{(2)}(\B\ell_1 - \B\ell_2)$ which we use to integrate over $d^2\ell_2$ to get
 \begin{equation}
 	\langle \delta\Theta^{(1)} \delta\Theta^{(1)*} \rangle = \int \frac{d^2\ell_1}{(2\pi)^2} [\B\ell_1 \cdot (\B\ell - \B\ell_1)]^2 C_{\phi\phi}(\ell_1) C(|\B\ell - \B\ell_1|) \equiv C^{(22)}(\ell)
 \end{equation}
@@ -702,17 +702,17 @@ where, from Sec.13.4,5, the convergence power spectrum is (see specifically Eq.1
 \end{equation}
 where the Limber approximation is used, the gravitational kernel is defined as
 \begin{equation}
-	g_L(\chi) = 1 - \frac{\chi(z)}{\chi(z^*)}
+	g_L(\chi) = 1 - \frac{\chi}{\chi^*}
 \end{equation}
-To take the matter power spectrum we were given from today $P(k,z=0)$ back to the CMB, we used the growing factor
+with $\chi^* = \chi(z^*)$. To take the matter power spectrum we were given from today $P(k,z=0)$ back to the CMB, we used the growth factor
 \begin{equation}
-	D(z) = \int_z^\infty dz' \frac{1+z'}{H(z')^3}
+	D(z) = \frac{H(z)}{D_0}\int_z^\infty dz' \frac{1+z'}{H(z')^3}
 \end{equation}
-such that $P(k,z) = P(k)\cdot D^2(z)$. The Hubble constant in our universe is 
+such that $P(k,z) = P(k,0)\cdot D^2(z)$. The Hubble constant in our universe is 
 \begin{equation}
 	H(z) = H_0 \left[\Omega_m(1+z)^3 + \Omega_r(1+z)^4 +\Omega_\Lambda\right]^{1/2}
 \end{equation}
-The obtained $C_{\kappa\kappa}(\ell)$ compared with the one provided in the data file is shown in the following figure, from which we can deduce that the approximation we've done by shifting the power spectrum with the growing factor from today to the CMB becomes relevant at small $\ell$s.
+The obtained $C_{\kappa\kappa}(\ell)$ compared with the one provided in the data file is shown in the following figure, from which we can deduce that the approximation we've done by shifting the power spectrum with the growth factor from today to the CMB becomes relevant at small $\ell$s.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{../images/convergence_spec_comp.png}
@@ -798,7 +798,7 @@ Since at CMB there is no $B$ mode, the unlensed terms are purely $E$ modes: $Q(\
 	\widetilde{Q}(\B\ell) &= E(\ell) \cos 2\varphi_\ell - \int \frac{d^2\ell_1}{(2\pi)^2} \B\ell_1 \cdot (\B\ell-\B\ell_1) \phi_L(\B\ell_1) E(\B\ell-\B\ell_1) \cos 2\varphi_{\ell\ell_1} \\
 	&\quad +\frac{1}{2} \int \frac{d^2\ell_1d^2\ell_2}{(2\pi)^4} [\B\ell_1 \cdot \B L] [\B\ell_2 \cdot \B L] \phi_L(\B\ell_1) \phi_L(\B\ell_2) E(\B L) \cos 2\varphi_{\ell\ell_1\ell_2}
 \end{align*}
-where we have defined $\varphi_{\ell\ell_1} := \varphi_{\B\ell-\B\ell_1}$, i.e. the angle of the vector $\B\ell-\B\ell_1$ to $\B\ell$ in the 2D flat sky. Similarly, $\widetilde{U}(\B\ell)$ is obtained from $\widetilde{Q}(\B\ell)$ by changing $ \cos 2\varphi_\ell\to \sin 2\varphi_\ell$ throughout.
+where we have defined $\varphi_{\ell\ell_1} := \varphi_{\B\ell-\B\ell_1}$, i.e. the angle of the vector $\B\ell-\B\ell_1$ to $\B\ell$ in the 2D flat sky, taking once again $\B\ell=(\ell,0)$ to define the $x$-axis. Similarly, $\widetilde{U}(\B\ell)$ is obtained from $\widetilde{Q}(\B\ell)$ by changing $ \cos 2\varphi_\ell\to \sin 2\varphi_\ell$ throughout.
 
 Now we can make term by term what we need to find the lensed power spectrums.
 \begin{align}
@@ -828,14 +828,14 @@ Some of the plots obtained are shown below, where we can evidently see the gener
     \centering
     \includegraphics[width=0.7\textwidth]{../images/pol_lensing_terms.png}
     \caption{Lesing effect on $EE$ mode from the CMB.}
-    \label{fig:pol_lensing}
+    \label{fig:pol_lensing_terms}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{../images/pol_lensing_terms.png}
+    \includegraphics[width=0.7\textwidth]{../images/pol_lensing.png}
     \caption{Comparison between the $EE$ and $BB$ modes}
-    \label{fig:pol_lensing_terms}
+    \label{fig:pol_lensing}
 \end{figure}
 
 \end{document}
